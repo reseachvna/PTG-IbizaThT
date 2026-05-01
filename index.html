@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Tính Giá Flamingo IB</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; line-height: 1.6; margin: 0; padding: 20px;}
+        .container { max-width: 1200px; margin: 10px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative;}
+        h1 { color: #1a365d; text-transform: uppercase; margin-bottom: 5px; font-size: 26px; text-align: center;}
+        h2 { color: #2d3748; font-weight: normal; margin-top: 0; margin-bottom: 30px; font-size: 20px; text-align: center;}
+        
+        #data-status { font-weight: bold; margin-bottom: 25px; padding: 10px; border-radius: 6px; display: inline-block; background: #f1f5f9; text-align: center;}
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(5px);}
+        .modal-content { background: #fff; padding: 35px 30px; border-radius: 12px; width: 90%; max-width: 420px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .sale-greeting-box { text-align: right; margin-bottom: 10px; font-size: 14px; color: #4a5568; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 30px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-weight: 600; margin-bottom: 8px; color: #4a5568; }
+        .form-group input, .form-group select { padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 16px; outline: none; transition: 0.2s; }
+        .form-group input:focus, .form-group select:focus { border-color: #1a365d; box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1); }
+
+        .full-width { grid-column: span 3; }
+        .mode-selector { background: #edf2f7; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 30px; align-items: center; justify-content: center; }
+        .mode-selector label { cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        
+        .custom-discount-box { background: #fffaf0; border: 1px dashed #ed8936; padding: 20px; border-radius: 8px; margin-top: 10px; display: none; }
+        .extra-discount-container { background: #ebf8ff; border: 1px dashed #3182ce; padding: 20px; border-radius: 8px; margin-top: 10px; }
+        .custom-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        .custom-table th { font-size: 14px; color: #4a5568; padding-bottom: 8px; }
+        .custom-table input, .custom-table select { width: 95%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+        .btn-add { background: #2b6cb0; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 14px;}
+        .btn-remove { background: #e53e3e; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold;}
+
+        .btn-main { background: #1a365d; color: white; border: none; padding: 18px 40px; border-radius: 30px; font-size: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 10px; }
+        .btn-main:hover { background: #2c5282; transform: translateY(-2px); }
+
+        .btn-print { background: #38a169; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-next { background: #2b6cb0; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .print-header-actions { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1a365d; margin-bottom: 20px; padding-bottom: 10px; }
+        .action-buttons { display: flex; gap: 10px; }
+
+        #result-box { display: none; margin-top: 40px; padding-top: 30px; border-top: 2px solid #edf2f7; text-align: left; }
+        .result-header { color: #1a365d; margin: 0; font-size: 22px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .info-item { display: flex; justify-content: space-between; border-bottom: 1px dashed #ccc; padding-bottom: 5px; align-items: center;}
+        .info-item span { color: #718096; }
+        .info-item strong { color: #2d3748; }
+        
+        .price-highlight { background: #fff5f5; padding: 20px; border-radius: 8px; border: 1px solid #feb2b2; margin-bottom: 30px; }
+        .final-price { color: #e53e3e; font-size: 22px; font-weight: bold; } 
+        .discount-detail { font-size: 15px; color: #4a5568; margin-top: 10px; padding-left: 20px; border-left: 3px solid #1a365d; }
+
+        .schedule-header { color: #d53f8c; margin-top: 25px; font-size: 16px; margin-bottom: 10px; text-transform: uppercase; border-bottom: 1px solid #d53f8c; display: inline-block; padding-bottom: 4px;}
+        table.schedule-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; background: #fff; }
+        .schedule-table th { background: #1a365d; color: white; padding: 10px; border: 1px solid #1a365d; text-align: center; font-size: 14px;}
+        .schedule-table td { border: 1px solid #cbd5e0; padding: 10px; vertical-align: middle; font-size: 14px;}
+        .schedule-table tr:nth-child(even) { background: #f7fafc; }
+        .td-center { text-align: center; }
+        .td-right { text-align: right; }
+
+        .copyright-footer { text-align: right; margin-top: 20px; border-top: 1px dashed #cbd5e0; padding-top: 10px; font-size: 12px; color: #a0aec0; font-style: italic; }
+        .copyright-footer strong { color: #4a5568; font-weight: bold; font-style: normal;}
+
+        @page { size: A4 portrait; margin: 10mm 10mm; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { font-size: 12px; line-height: 1.4; color: #000; background: #fff; }
+            .container { box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; border: none;}
+            #result-box { display: block !important; margin-top: 0; padding-top: 0; border: none; }
+            #print-title-area { display: block !important; margin-bottom: 15px; }
+            h1 { font-size: 20px; margin-bottom: 2px; }
+            h2 { font-size: 15px; margin-bottom: 15px; }
+            .result-header { font-size: 16px; margin-bottom: 10px; }
+            .info-grid { gap: 15px; margin-bottom: 15px; }
+            .info-item { padding-bottom: 2px; }
+            .price-highlight { padding: 10px 15px; margin-bottom: 15px; border-color: #ccc; background: transparent; }
+            table.schedule-table { margin-bottom: 10px; }
+            .schedule-table th, .schedule-table td { padding: 5px; font-size: 12px; border-color: #999; color: #000; }
+            tr { page-break-inside: avoid; }
+            .copyright-footer { color: #666; border-top: 1px solid #999; margin-top: 10px; padding-top: 5px; }
+        }
+
+        @media screen and (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; margin: 0; }
+            h1 { font-size: 20px; }
+            .form-grid { grid-template-columns: 1fr; gap: 15px; }
+            .full-width { grid-column: span 1; }
+            .info-grid { grid-template-columns: 1fr; gap: 15px; }
+            .mode-selector { flex-direction: column; gap: 15px; }
+            .print-header-actions { flex-direction: column; align-items: stretch; gap: 15px; text-align: center; }
+            .action-buttons { flex-direction: column; display: flex; gap: 10px;}
+            .action-buttons button { width: 100%; justify-content: center; }
+            .custom-table, .schedule-table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;}
+        }
+    </style>
+</head>
+<body>
+
+<div id="sales-modal" class="modal-overlay no-print">
+    <div class="modal-content">
+        <h3 style="color:#1a365d; margin-top:0; font-size: 20px;">ĐĂNG NHẬP HỆ THỐNG</h3>
+        <p style="font-size:14px; color:#666; margin-bottom: 25px;">Vui lòng nhập đúng thông tin để ghi nhận báo giá.</p>
+        
+        <div class="form-group" style="margin-bottom: 15px; text-align:left;">
+            <label>Tên chuyên viên tư vấn (*)</label>
+            <input type="text" id="sale-name" placeholder="Ví dụ: Nguyễn Văn A">
+            <span style="font-size: 11px; color: #e53e3e; margin-top: 4px; font-style: italic;">* Yêu cầu nhập tên thật (Không dùng số).</span>
+        </div>
+        <div class="form-group" style="margin-bottom: 25px; text-align:left;">
+            <label>Số điện thoại / Mã NV (*)</label>
+            <input type="text" id="sale-phone" placeholder="Ví dụ: 0987654321">
+            <span style="font-size: 11px; color: #e53e3e; margin-top: 4px; font-style: italic;">* Viết liền không dấu, độ dài 4-15 ký tự.</span>
+        </div>
+        
+        <button class="btn-main" style="margin-top:0;" onclick="saveSalesInfo()">XÁC NHẬN BẮT ĐẦU</button>
+    </div>
+</div>
+
+<div class="container">
+    
+    <div id="sale-greeting" class="sale-greeting-box no-print" style="display:none;">
+        👤 Đang tư vấn bởi: <strong id="current-sale-name" style="color:#1a365d;">...</strong> 
+        <a href="#" onclick="logoutSales(); return false;" style="color:#e53e3e; text-decoration:none; margin-left: 10px; font-size: 13px;">(Đăng xuất)</a>
+    </div>
+
+    <div style="text-align: center;" class="no-print">
+        <h1>Bảng tính giá & Tiến độ thanh toán</h1>
+        <h2>Flamingo IB</h2>
+        <div id="data-status">⏳ Đang khởi động hệ thống...</div>
+    </div>
+
+    <div class="mode-selector no-print">
+        <label><input type="radio" name="calc-mode" value="auto" checked onchange="toggleMode()"> TÍNH TỰ ĐỘNG</label>
+        <label><input type="radio" name="calc-mode" value="custom" onchange="toggleMode()"> TÙY CHỈNH NGOẠI GIAO</label>
+    </div>
+
+    <div class="form-grid no-print">
+        <div class="form-group">
+            <label>Tên khách hàng</label>
+            <input type="text" id="fullname" placeholder="Họ và tên khách hàng...">
+        </div>
+        <div class="form-group">
+            <label>Mã sản phẩm</label>
+            <input type="text" id="apt-code" placeholder="Ví dụ: MN1.06">
+        </div>
+        <div class="form-group">
+            <label>Ngày đặt cọc</label>
+            <input type="date" id="deposit-date">
+        </div>
+        
+        <div class="form-group">
+            <label>Tình trạng sản phẩm</label>
+            <select id="apt-status" onchange="updatePaymentPlans()">
+                <option value="DaXay">Đã xây dựng</option>
+                <option value="ChuaXay">Chưa xây dựng</option>
+            </select>
+        </div>
+        
+        <div class="form-group" style="grid-column: span 2;">
+            <label>Phương thức thanh toán</label>
+            <select id="payment-plan"></select>
+        </div>
+
+        <div class="form-group full-width no-print" id="auto-extra-discount-box">
+            <div class="extra-discount-container">
+                <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; cursor: pointer; color: #2b6cb0;">
+                    <input type="checkbox" id="enable-extra" onchange="toggleExtraDetails()" style="width: 20px; height: 20px;">
+                    <strong>Áp dụng chiết khấu bổ sung (Tính lũy kế trên Tiền Đất)</strong>
+                </label>
+                
+                <div id="extra-details-area" style="display: none;">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Loại</th>
+                                <th>Mốc áp dụng</th>
+                                <th>Giá trị (% hoặc tiền)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="extra-body">
+                            <tr>
+                                <td>
+                                    <select class="ex-type" onchange="handleExTypeChange(this)">
+                                        <option value="percent">Tỷ lệ (%)</option>
+                                        <option value="amount">Số tiền (VNĐ)</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="ex-base">
+                                        <option value="after-vat">Giá tiền Đất sau CK trước (Gồm VAT)</option>
+                                        <option value="before-vat">Giá tiền Đất sau CK trước (Chưa VAT)</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" class="ex-value" placeholder="Nhập giá trị..." step="0.1"></td>
+                                <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn-add" onclick="addExtraRow()">+ Thêm chiết khấu bổ sung</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-discount-box" class="custom-discount-box no-print">
+        <label style="font-weight: bold; color: #c05621;">Nhập thủ công các mục chiết khấu (Tính lũy kế trên Tiền Đất):</label>
+        <table class="custom-table">
+            <thead><tr><th style="text-align: left;">Nội dung/Lý do</th><th style="text-align: left;">Tỷ lệ (%)</th><th></th></tr></thead>
+            <tbody id="custom-body">
+                <tr>
+                    <td><input type="text" class="c-name" placeholder="Ví dụ: Voucher ngoại giao..."></td>
+                    <td><input type="number" class="c-rate" value="0" step="0.1"></td>
+                    <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn-add" onclick="addCustomRow()">+ Thêm dòng chiết khấu</button>
+    </div>
+
+    <button class="btn-main no-print" onclick="calculate()">TẠO PHIẾU TÍNH GIÁ</button>
+
+    <div id="result-box">
+        <div style="text-align: center; display: none; margin-bottom: 30px;" id="print-title-area">
+            <h1>Bảng tính giá & Tiến độ thanh toán</h1>
+            <h2>Flamingo IB</h2>
+        </div>
+
+        <div class="print-header-actions">
+            <h3 class="result-header">CHI TIẾT PHIẾU TÍNH GIÁ</h3>
+            <div class="action-buttons no-print">
+                <button class="btn-print" onclick="inPhieu()">🖨️ TẢI PDF / IN PHIẾU</button>
+                <button id="btn-goto-index2" class="btn-next" style="display: none;" onclick="transferToIndex2()">DÒNG THU BÁN PHÒNG & ROI →</button>
+            </div>
+        </div>
+        
+        <div class="info-grid">
+            <div class="info-item"><span>Khách hàng:</span> <strong id="out-name"></strong></div>
+            <div class="info-item"><span>Mã sản phẩm:</span> <strong id="out-code"></strong></div>
+            <div class="info-item"><span>Loại sản phẩm:</span> <strong id="out-type"></strong></div>
+            <div class="info-item"><span>Diện tích đất:</span> <strong><span id="out-area"></span> m2</strong></div>
+        </div>
+
+        <div class="price-highlight">
+            <div class="info-item" style="border:none; padding-bottom: 0;"><span>Giá trị Đất (gồm VAT):</span> <strong id="out-price-land"></strong></div>
+            <div class="info-item" style="border:none; padding-bottom: 0;"><span>Giá trị Xây dựng (gồm VAT):</span> <strong id="out-price-build"></strong></div>
+            <div class="info-item" style="border:none; padding-bottom: 0;"><span>Tổng giá niêm yết:</span> <strong id="out-price-raw" style="font-size: 18px; color: #1a365d"></strong></div>
+            
+            <div style="margin-top: 15px; margin-bottom: 5px; font-weight: bold; color: #2d3748;">Chi tiết áp dụng chiết khấu (Được trừ trực tiếp vào Tiền Đất):</div>
+            <div id="discount-breakdown" class="discount-detail"></div>
+            
+            <div class="info-item final-price-container" style="border:none; margin-top: 20px; border-top: 2px dashed #feb2b2; padding-top: 15px; align-items: center;">
+                <span style="font-size: 18px; color: #333; font-weight: bold;">TỔNG GIÁ SAU CHIẾT KHẤU:</span>
+                <span class="final-price" id="out-price-final"></span>
+            </div>
+        </div>
+
+        <h3 style="color: #1a365d; margin-bottom: 10px; font-size: 18px; text-transform: uppercase;">Tiến độ thanh toán chi tiết</h3>
+        <div id="schedule-content"></div>
+
+        <div style="margin-top: 30px; text-align: right; font-style: italic; color: #666; font-size: 14px;">
+            Ngày xuất phiếu: <span id="current-print-date"></span>
+        </div>
+
+        <div class="copyright-footer">
+            © Developed by <strong>DMD – R&D FLV</strong>
+        </div>
+    </div>
+</div>
+
+<script>
+    let masterData = [];
+
+    // ===== LỌC REGEX ĐĂNG NHẬP =====
+    function checkSalesLogin() {
+        const saleInfo = localStorage.getItem('saleInfo');
+        if (!saleInfo) {
+            document.getElementById('sales-modal').style.display = 'flex';
+            document.getElementById('sale-greeting').style.display = 'none';
+        } else {
+            const info = JSON.parse(saleInfo);
+            document.getElementById('current-sale-name').innerText = info.name;
+            document.getElementById('sales-modal').style.display = 'none';
+            document.getElementById('sale-greeting').style.display = 'block';
+        }
+    }
+
+    function saveSalesInfo() {
+        const name = document.getElementById('sale-name').value.trim();
+        const phone = document.getElementById('sale-phone').value.trim();
+        if (!name || !phone) return alert("⚠️ Vui lòng nhập đầy đủ Tên và Số điện thoại/Mã NV!");
+
+        const nameRegex = /^[\p{L}\s]+$/u;
+        if (!nameRegex.test(name) || name.length < 2) return alert("⚠️ TÊN KHÔNG HỢP LỆ!\nVui lòng nhập đúng Họ và Tên (Không dùng số hoặc ký tự đặc biệt).");
+
+        const phoneRegex = /^[a-zA-Z0-9]+$/;
+        if (!phoneRegex.test(phone) || phone.length < 4 || phone.length > 15) return alert("⚠️ SĐT / MÃ NV KHÔNG HỢP LỆ!\nVui lòng viết liền không dấu, độ dài từ 4-15 ký tự.");
+
+        localStorage.setItem('saleInfo', JSON.stringify({ name: name, phone: phone }));
+        checkSalesLogin();
+    }
+
+    function logoutSales() {
+        if(confirm("Bạn có chắc chắn muốn thoát tài khoản này?")) {
+            localStorage.removeItem('saleInfo');
+            document.getElementById('sale-name').value = '';
+            document.getElementById('sale-phone').value = '';
+            checkSalesLogin();
+        }
+    }
+
+    // ===== MENU PHƯƠNG THỨC THANH TOÁN ĐỘNG IB =====
+    function updatePaymentPlans() {
+        const status = document.getElementById('apt-status').value;
+        const planSelect = document.getElementById('payment-plan');
+        planSelect.innerHTML = "";
+        
+        if(status === 'DaXay') {
+            planSelect.innerHTML += `<option value="36">Phương án 36 tháng (Tiêu chuẩn)</option>`;
+            planSelect.innerHTML += `<option value="12">Phương án 12 tháng (CK 7.5% trên tiền Đất)</option>`;
+            planSelect.innerHTML += `<option value="30">Thanh toán nhanh 30 ngày (CK 15% trên tiền Đất)</option>`;
+        } else {
+            planSelect.innerHTML += `<option value="12">Thanh toán thông thường 12 tháng</option>`;
+            planSelect.innerHTML += `<option value="30">Thanh toán tiền Đất 30 ngày (CK 7% trên tiền Đất)</option>`;
+        }
+    }
+
+    // ===== KHỞI CHẠY HỆ THỐNG =====
+    function initApp() {
+        checkSalesLogin();
+        updatePaymentPlans();
+
+        const statusEl = document.getElementById('data-status');
+        const today = new Date();
+        document.getElementById('deposit-date').valueAsDate = today;
+        document.getElementById('current-print-date').innerText = getFormattedDate(today);
+
+        fetch('Data.json')
+            .then(res => {
+                if (!res.ok) throw new Error("Lỗi " + res.status);
+                return res.json();
+            })
+            .then(data => {
+                masterData = Array.isArray(data) ? data : data[Object.keys(data)[0]];
+                if (!masterData || masterData.length === 0) throw new Error("Rỗng");
+                statusEl.innerHTML = "🟢 Kết nối dữ liệu thành công!";
+                statusEl.style.color = "green";
+                statusEl.style.background = "#f0fdf4";
+            })
+            .catch(err => {
+                statusEl.innerHTML = "🔴 Lỗi kết nối Data.json! Vui lòng mở qua GitHub Pages.";
+                statusEl.style.color = "red";
+                statusEl.style.background = "#fef2f2";
+            });
+    }
+    initApp();
+
+    function toggleMode() {
+        const mode = document.querySelector('input[name="calc-mode"]:checked').value;
+        document.getElementById('custom-discount-box').style.display = (mode === 'custom' ? 'block' : 'none');
+        document.getElementById('auto-extra-discount-box').style.display = (mode === 'auto' ? 'block' : 'none');
+    }
+
+    function toggleExtraDetails() {
+        const isChecked = document.getElementById('enable-extra').checked;
+        document.getElementById('extra-details-area').style.display = isChecked ? 'block' : 'none';
+    }
+
+    function handleExTypeChange(el) {
+        const row = el.closest('tr');
+        const baseSelect = row.querySelector('.ex-base');
+        if (el.value === 'amount') {
+            baseSelect.value = 'after-vat';
+            baseSelect.disabled = true;
+        } else {
+            baseSelect.disabled = false;
+        }
+    }
+
+    function addExtraRow() {
+        const row = `<tr>
+            <td><select class="ex-type" onchange="handleExTypeChange(this)"><option value="percent">Tỷ lệ (%)</option><option value="amount">Số tiền (VNĐ)</option></select></td>
+            <td><select class="ex-base"><option value="after-vat">Giá tiền Đất sau CK trước (Gồm VAT)</option><option value="before-vat">Giá tiền Đất sau CK trước (Chưa VAT)</option></select></td>
+            <td><input type="number" class="ex-value" placeholder="Nhập giá trị..." step="0.1"></td>
+            <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+        </tr>`;
+        document.getElementById('extra-body').insertAdjacentHTML('beforeend', row);
+    }
+
+    function addCustomRow() {
+        const row = `<tr>
+            <td><input type="text" class="c-name" placeholder="Lý do chiết khấu..."></td>
+            <td><input type="number" class="c-rate" value="0" step="0.1"></td>
+            <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+        </tr>`;
+        document.getElementById('custom-body').insertAdjacentHTML('beforeend', row);
+    }
+
+    function cleanAndParsePrice(val) {
+        if (!val) return 0;
+        let cleanVal = String(val).replace(/\s+/g, '').replace(/[^0-9]/g, '');
+        return Number(cleanVal) || 0;
+    }
+
+    function formatMoney(num) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Math.round(num));
+    }
+
+    function getFormattedDate(dateObj) {
+        let dd = String(dateObj.getDate()).padStart(2, '0');
+        let mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+        let yyyy = dateObj.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function calculateDate(baseDate, daysToAdd) {
+        if (daysToAdd === null) return "Theo TB của CĐT";
+        let d = new Date(baseDate);
+        d.setDate(d.getDate() + daysToAdd);
+        return getFormattedDate(d);
+    }
+
+    const layGiaTriCot = (item, tenCotCanTim) => {
+        const keyThucTe = Object.keys(item).find(k => k.trim().toLowerCase() === tenCotCanTim.toLowerCase());
+        return keyThucTe ? item[keyThucTe] : null;
+    };
+
+    // ===== HÀM GỬI DỮ LIỆU LÊN GOOGLE SHEET ====
+    function sendDataToSheet(khachHang, maCan, giaNY, tongCK, giaSauCK) {
+        const saleInfoStr = localStorage.getItem('saleInfo');
+        let saleName = "Chưa khai báo";
+        let salePhone = "Chưa khai báo";
+        
+        if (saleInfoStr) {
+            const info = JSON.parse(saleInfoStr);
+            saleName = info.name;
+            salePhone = info.phone;
+        }
+
+        const payload = {
+            saleName: saleName,
+            salePhone: salePhone,
+            khachHang: khachHang,
+            maCan: maCan,
+            giaNiemYet: giaNY,
+            tongChietKhau: tongCK,
+            giaSauCK: giaSauCK
+        };
+
+        fetch("https://script.google.com/macros/s/AKfycby2ae5MqM0sShZx5l1ev_LYVAYWoBwwihXA_yG58HyPrJ5eoSmkoKYWrefZ8W6FBgGn/exec", {
+            method: 'POST',
+            mode: 'no-cors', 
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8',
+            },
+            body: JSON.stringify(payload)
+        }).catch(err => console.log("Lưu log sheet thất bại:", err));
+    }
+
+    // ===== THUẬT TOÁN TÍNH CHIẾT KHẤU IB =====
+    function calculate() {
+        const codeInput = document.getElementById('apt-code').value.toUpperCase().trim();
+        const depositDate = document.getElementById('deposit-date').value;
+        const khachHang = document.getElementById('fullname').value || "Khách lẻ";
+        
+        if (masterData.length === 0) return alert("Hệ thống chưa tải xong dữ liệu!");
+        if (!codeInput) return alert("Vui lòng nhập mã sản phẩm!");
+        if (!depositDate) return alert("Vui lòng chọn Ngày đặt cọc!");
+
+        const apt = masterData.find(item => {
+            const maCan = layGiaTriCot(item, "ma_can") || layGiaTriCot(item, "id");
+            return maCan && String(maCan).toUpperCase().trim() === codeInput;
+        });
+        
+        if (!apt) return alert("Không tìm thấy mã sản phẩm: " + codeInput);
+
+        const status = document.getElementById('apt-status').value;
+        const mode = document.querySelector('input[name="calc-mode"]:checked').value;
+        const plan = document.getElementById('payment-plan').value;
+
+        // Bóc tách Giá Đất và Giá Xây
+        const giaDat = cleanAndParsePrice(layGiaTriCot(apt, "gia_dat"));
+        const giaXay = cleanAndParsePrice(layGiaTriCot(apt, "gia_xay"));
+        const giaTongGoc = giaDat + giaXay;
+        
+        if(giaDat === 0 || giaXay === 0) return alert("Lỗi: Dữ liệu Giá Đất hoặc Giá Xây không hợp lệ.");
+
+        let giaDatSauCK = giaDat;
+        let giaXaySauCK = giaXay;
+        let breakdown = "";
+
+        // 1. TÍNH CHIẾT KHẤU CỦA CĐT (CHỈ TRÊN TIỀN ĐẤT) THEO LOGIC IB
+        if (mode === 'auto') {
+            if (status === 'DaXay') {
+                if (plan === '12') {
+                    let giamDat = giaDat * 0.075;
+                    breakdown += `• CK 7.5% Tiến độ 12T (Chỉ trừ vào tiền Đất): <strong style="color:#e53e3e">-${formatMoney(giamDat)}</strong><br>`;
+                    giaDatSauCK -= giamDat;
+                } else if (plan === '30') {
+                    let giamDat = giaDat * 0.15;
+                    breakdown += `• CK 15% Thanh toán sớm (Chỉ trừ vào tiền Đất): <strong style="color:#e53e3e">-${formatMoney(giamDat)}</strong><br>`;
+                    giaDatSauCK -= giamDat;
+                }
+            } else if (status === 'ChuaXay') {
+                if (plan === '30') {
+                    let giamDat = giaDat * 0.07;
+                    breakdown += `• CK 7% Thanh toán sớm tiền Đất (Chỉ trừ vào tiền Đất): <strong style="color:#e53e3e">-${formatMoney(giamDat)}</strong><br>`;
+                    giaDatSauCK -= giamDat;
+                }
+            }
+        }
+
+        // 2. TÍNH CHIẾT KHẤU BỔ SUNG & THỦ CÔNG (TRỪ LŨY KẾ VÀO TIỀN ĐẤT)
+        if (mode === 'auto' && document.getElementById('enable-extra').checked) {
+            const rows = document.querySelectorAll('#extra-body tr');
+            rows.forEach((row, index) => {
+                const type = row.querySelector('.ex-type').value;
+                const base = row.querySelector('.ex-base').value;
+                const val = parseFloat(row.querySelector('.ex-value').value) || 0;
+
+                if (val > 0) {
+                    if (type === 'amount') {
+                        breakdown += `• CK bổ sung tiền mặt #${index + 1} (Trừ vào Đất): <strong style="color:#e53e3e">-${formatMoney(val)}</strong><br>`;
+                        giaDatSauCK -= val;
+                    } else {
+                        let refPrice = (base === 'before-vat') ? (giaDatSauCK / 1.1) : giaDatSauCK;
+                        let extraDisc = refPrice * (val / 100);
+                        let baseText = (base === 'before-vat') ? "trên tiền Đất (chưa VAT)" : "trên tiền Đất (gồm VAT)";
+                        breakdown += `• CK bổ sung #${index + 1} (${val}% ${baseText}): <strong style="color:#e53e3e">-${formatMoney(extraDisc)}</strong><br>`;
+                        giaDatSauCK -= extraDisc;
+                    }
+                }
+            });
+        } else if (mode === 'custom') {
+            const names = document.querySelectorAll('.c-name');
+            const rates = document.querySelectorAll('.c-rate');
+            names.forEach((n, idx) => {
+                let r = parseFloat(rates[idx].value) / 100;
+                if (r > 0) {
+                    let tienGiam = giaDatSauCK * r;
+                    breakdown += `• ${n.value || 'Chiết khấu bổ sung'} (${rates[idx].value}% trên tiền Đất): <strong style="color:#e53e3e">-${formatMoney(tienGiam)}</strong><br>`;
+                    giaDatSauCK -= tienGiam;
+                }
+            });
+        }
+
+        // Không cho tiền đất âm
+        if (giaDatSauCK < 0) giaDatSauCK = 0;
+
+        if (breakdown === "") breakdown = "<i>Không áp dụng mức chiết khấu nào.</i>";
+
+        // LÀM TRÒN SỐ ĐỂ CỘNG TRÁNH LỆCH LẺ
+        giaDatSauCK = Math.round(giaDatSauCK / 1000) * 1000;
+        let tongGiaSauCK = giaDatSauCK + giaXaySauCK;
+
+        document.getElementById('out-name').innerText = khachHang;
+        document.getElementById('out-code').innerText = codeInput;
+        document.getElementById('out-type').innerText = layGiaTriCot(apt, "Type") || layGiaTriCot(apt, "loai_can") || "N/A";
+        document.getElementById('out-area').innerText = layGiaTriCot(apt, "dien_tich") || "0";
+        
+        document.getElementById('out-price-land').innerText = formatMoney(giaDat);
+        document.getElementById('out-price-build').innerText = formatMoney(giaXay);
+        document.getElementById('out-price-raw').innerText = formatMoney(giaTongGoc);
+        
+        document.getElementById('out-price-final').innerText = formatMoney(tongGiaSauCK);
+        document.getElementById('discount-breakdown').innerHTML = breakdown;
+
+        // Render Tiến độ dựa theo Tình trạng
+        renderSchedule(status, plan, giaDatSauCK, giaXaySauCK, tongGiaSauCK, depositDate);
+        
+        document.getElementById('current-print-date').innerText = getFormattedDate(new Date());
+
+        document.getElementById('result-box').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('result-box').offsetTop, behavior: 'smooth' });
+
+        // GỬI DATA VỀ GOOGLE SHEET
+        sendDataToSheet(khachHang, codeInput, giaTongGoc, giaTongGoc - tongGiaSauCK, tongGiaSauCK);
+    }
+
+    // ===== RENDER BẢNG TIẾN ĐỘ THEO LOGIC CỦA IB =====
+    function renderSchedule(status, plan, finalGiaDat, finalGiaXay, tongGiaSauCK, depositDateStr) {
+        const container = document.getElementById('schedule-content');
+        container.innerHTML = "";
+        
+        // Tất cả cọc đều là 100 triệu
+        const deposit = 100000000; 
+        
+        let depositObj = new Date(depositDateStr);
+        let hdmbObj = new Date(depositDateStr);
+        hdmbObj.setDate(hdmbObj.getDate() + 7); // Ký HĐMB sau 7 ngày
+        
+        let stringNgayCoc = getFormattedDate(depositObj);
+
+        // ===== TRƯỜNG HỢP 1: ĐÃ XÂY DỰNG (GỘP 1 BẢNG) =====
+        if (status === 'DaXay') {
+            let steps = [];
+            if (plan === '12') {
+                steps = [
+                    {d: "Lần 1_Ngay khi ký HĐMB", t: "T", daysFromT: 0, p: 0.20},
+                    {d: "Lần 2_HĐMB", t: "T+60", daysFromT: 60, p: 0.10},
+                    {d: "Lần 3_HĐMB", t: "T+120", daysFromT: 120, p: 0.10},
+                    {d: "Lần 4_HĐMB", t: "T+180", daysFromT: 180, p: 0.10},
+                    {d: "Lần 5_HĐMB", t: "T+240", daysFromT: 240, p: 0.10},
+                    {d: "Lần 6_HĐMB", t: "T+300", daysFromT: 300, p: 0.10},
+                    {d: "Lần 7_HĐMB (Dự kiến nhận Bàn giao)", t: "T+360", daysFromT: 360, p: 0.25},
+                    {d: "Lần 8_HĐMB (Thông báo nhận GCN)", t: "Theo TB", daysFromT: null, p: 0.05}
+                ];
+            } else if (plan === '36') {
+                steps = [
+                    {d: "Lần 1_Ngay khi ký HĐMB", t: "T", daysFromT: 0, p: 0.15},
+                    {d: "Lần 2_HĐMB", t: "T+90", daysFromT: 90, p: 0.10},
+                    {d: "Lần 3_HĐMB", t: "T+120", daysFromT: 120, p: 0.10},
+                    {d: "Lần 4_HĐMB", t: "T+180", daysFromT: 180, p: 0.15},
+                    {d: "Lần 5_HĐMB", t: "T+360", daysFromT: 360, p: 0.05},
+                    {d: "Lần 6_HĐMB", t: "T+540", daysFromT: 540, p: 0.05},
+                    {d: "Lần 7_HĐMB", t: "T+720", daysFromT: 720, p: 0.05},
+                    {d: "Lần 8_HĐMB", t: "T+900", daysFromT: 900, p: 0.05},
+                    {d: "Lần 9_HĐMB (Dự kiến nhận Bàn giao)", t: "T+1080", daysFromT: 1080, p: 0.25},
+                    {d: "Lần 10_HĐMB (Thông báo nhận GCN)", t: "Theo TB", daysFromT: null, p: 0.05}
+                ];
+            } else if (plan === '30') {
+                // Giữ nguyên logic thanh toán sớm chuẩn nếu không quy định rõ trong file
+                steps = [
+                    {d: "Lần 1_Ngay khi ký HĐMB", t: "T", daysFromT: 0, p: 0.20},
+                    {d: "Lần 2_Thanh toán sớm", t: "T+30", daysFromT: 30, p: 0.75},
+                    {d: "Lần 3_Nhận GCN", t: "Theo TB", daysFromT: null, p: 0.05}
+                ];
+            }
+
+            let html = `<table class="schedule-table">
+                <tr><th style="width: 35%;">Tiến độ thanh toán HĐMB</th><th style="width: 15%;">Thời hạn</th><th style="width: 15%;">Ngày dự kiến</th><th style="width: 10%;">Tỷ lệ</th><th style="width: 25%;">Số tiền (VNĐ)</th></tr>
+                <tr style="background: #fff5f5;"><td><strong>Đặt cọc</strong></td><td class="td-center">-</td><td class="td-center"><strong style="color: #c53030;">${getFormattedDate(new Date(depositDateStr))}</strong></td><td class="td-center">-</td><td class="td-right"><strong style="color:#c53030">${formatMoney(deposit)}</strong></td></tr>`;
+            
+            steps.forEach((s, i) => {
+                let amount = Math.round((tongGiaSauCK * s.p) / 1000) * 1000;
+                let note = (i === 0) ? `<br><div style="font-size: 12px; color: #666; margin-top: 5px;">(Đã bao gồm 100tr cọc.<br>Nộp thêm: <b>${formatMoney(amount - deposit)}</b>)</div>` : "";
+                let dateStr = (s.daysFromT === null) ? "Theo TB" : calculateDate(hdmbObj, s.daysFromT);
+
+                html += `<tr><td style="text-align: justify;">${s.d}</td><td class="td-center">${s.t}</td><td class="td-center" style="color: #2b6cb0;"><strong>${dateStr}</strong></td><td class="td-center"><strong>${(s.p * 100)}%</strong></td><td class="td-right"><strong>${formatMoney(amount)}</strong>${note}</td></tr>`;
+            });
+            html += `<tr style="background: #edf2f7;"><td colspan="3" class="td-right"><strong>Tổng cộng:</strong></td><td class="td-center"><strong>100%</strong></td><td class="td-right"><strong style="color:#e53e3e; font-size: 18px;">${formatMoney(tongGiaSauCK)}</strong></td></tr></table>`;
+            container.innerHTML = html;
+        } 
+        
+        // ===== TRƯỜNG HỢP 2: CHƯA XÂY DỰNG (TÁCH 2 BẢNG ĐẤT / XÂY) =====
+        else {
+            let landSteps = [];
+            if (plan === '12') {
+                landSteps = [
+                    {d: "Lần 1_Ngay khi ký HĐMB", t: "T", daysFromT: 0, p: 0.20},
+                    {d: "Lần 2_HĐMB", t: "T+90", daysFromT: 90, p: 0.20},
+                    {d: "Lần 3_HĐMB", t: "T+120", daysFromT: 120, p: 0.15},
+                    {d: "Lần 4_HĐMB", t: "T+180", daysFromT: 180, p: 0.15},
+                    {d: "Lần 5_HĐMB", t: "T+360", daysFromT: 360, p: 0.25}
+                ];
+            } else {
+                landSteps = [
+                    {d: "Lần 1_Ngay khi ký HĐMB", t: "T", daysFromT: 0, p: 0.20},
+                    {d: "Lần 2_Thanh toán sớm", t: "T+30", daysFromT: 30, p: 0.75}
+                ];
+            }
+
+            // Xây dựng bám sát mốc T+400, T+490, T+700 của IB
+            let buildSteps = [
+                {d: "Lần 1_Giá trị XD (Khi CĐT TB thi công)", t: "T_XD (Dự kiến T+400)", daysFromT: 400, p: 0.30},
+                {d: "Lần 2_Giá trị XD", t: "T_XD+90 (Dự kiến T+490)", daysFromT: 490, p: 0.15},
+                {d: "Lần 3_Giá trị XD (Thông báo bàn giao)", t: "Dự kiến T+700", daysFromT: 700, p: 0.50}
+            ];
+
+            // BẢNG 1: ĐẤT
+            let html = `<div class="schedule-header">1. TIẾN ĐỘ THANH TOÁN GIÁ TRỊ QUYỀN SỬ DỤNG ĐẤT (95%)</div>`;
+            html += `<table class="schedule-table"><tr><th style="width: 35%;">Tiến độ HĐMB Đất</th><th style="width: 15%;">Thời hạn</th><th style="width: 15%;">Ngày dự kiến</th><th style="width: 10%;">Tỷ lệ</th><th style="width: 25%;">Số tiền (VNĐ)</th></tr>`;
+            html += `<tr style="background: #fff5f5;"><td><strong>Đặt cọc</strong></td><td class="td-center">-</td><td class="td-center"><strong style="color: #c53030;">${getFormattedDate(new Date(depositDateStr))}</strong></td><td class="td-center">-</td><td class="td-right"><strong style="color:#c53030">${formatMoney(deposit)}</strong></td></tr>`;
+            
+            let totalLandPaid = 0;
+            landSteps.forEach((s, i) => {
+                let amount = Math.round((finalGiaDat * s.p) / 1000) * 1000;
+                totalLandPaid += amount;
+                let note = (i === 0) ? `<br><div style="font-size: 12px; color: #666; margin-top: 5px;">(Đã bao gồm 100tr cọc.<br>Nộp thêm: <b>${formatMoney(amount - deposit)}</b>)</div>` : "";
+                let dateStr = calculateDate(hdmbObj, s.daysFromT);
+                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center" style="color: #2b6cb0;"><strong>${dateStr}</strong></td><td class="td-center"><strong>${(s.p * 100)}%</strong></td><td class="td-right"><strong>${formatMoney(amount)}</strong>${note}</td></tr>`;
+            });
+            html += `<tr style="background: #edf2f7;"><td colspan="3" class="td-right"><strong>Cộng (Tiền Đất 95%):</strong></td><td class="td-center"><strong>95%</strong></td><td class="td-right"><strong style="color:#1a365d;">${formatMoney(totalLandPaid)}</strong></td></tr></table>`;
+
+            // BẢNG 2: XÂY
+            html += `<div class="schedule-header">2. TIẾN ĐỘ THANH TOÁN GIÁ TRỊ XÂY DỰNG (95%)</div>`;
+            html += `<table class="schedule-table"><tr><th style="width: 35%;">Tiến độ Giá trị XD</th><th style="width: 15%;">Thời hạn</th><th style="width: 15%;">Ngày dự kiến</th><th style="width: 10%;">Tỷ lệ</th><th style="width: 25%;">Số tiền (VNĐ)</th></tr>`;
+            
+            let totalBuildPaid = 0;
+            buildSteps.forEach((s) => {
+                let amount = Math.round((finalGiaXay * s.p) / 1000) * 1000;
+                totalBuildPaid += amount;
+                let dateStr = calculateDate(hdmbObj, s.daysFromT);
+                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center" style="color: #2b6cb0;"><strong>${dateStr}</strong></td><td class="td-center"><strong>${(s.p * 100)}%</strong></td><td class="td-right"><strong>${formatMoney(amount)}</strong></td></tr>`;
+            });
+            html += `<tr style="background: #edf2f7;"><td colspan="3" class="td-right"><strong>Cộng (Tiền Xây 95%):</strong></td><td class="td-center"><strong>95%</strong></td><td class="td-right"><strong style="color:#1a365d;">${formatMoney(totalBuildPaid)}</strong></td></tr></table>`;
+
+            // ĐỢT CUỐI: 5% TỔNG (T+800 theo chuẩn IB)
+            let final5Percent = tongGiaSauCK - totalLandPaid - totalBuildPaid;
+            html += `<div class="schedule-header">3. THANH TOÁN ĐỢT CUỐI (5% TỔNG GIÁ TRỊ CĂN)</div>`;
+            html += `<table class="schedule-table"><tr><th style="width: 35%;">Tiến độ Bàn giao GCN</th><th style="width: 15%;">Thời hạn</th><th style="width: 15%;">Ngày dự kiến</th><th style="width: 10%;">Tỷ lệ</th><th style="width: 25%;">Số tiền (VNĐ)</th></tr>`;
+            html += `<tr><td>Lần 4_HĐMB (Giá trị QSD đất + Giá trị XD)<br><i>(Theo thông báo nhận GCN của CĐT)</i></td><td class="td-center">T+800</td><td class="td-center" style="color: #2b6cb0;"><strong>${calculateDate(hdmbObj, 800)}</strong></td><td class="td-center"><strong>5%</strong></td><td class="td-right"><strong style="color:#e53e3e">${formatMoney(final5Percent)}</strong></td></tr></table>`;
+            
+            // TỔNG KẾT TOÀN BỘ
+            html += `<table class="schedule-table"><tr style="background: #fff5f5;"><td colspan="3" class="td-right" style="border:none; padding-right:15px; font-size:18px;"><strong>TỔNG GIÁ TRỊ CẦN THANH TOÁN:</strong></td><td class="td-center" style="border:none;"><strong>100%</strong></td><td class="td-right" style="border:none;"><strong style="color:#e53e3e; font-size: 20px;">${formatMoney(tongGiaSauCK)}</strong></td></tr></table>`;
+            
+            container.innerHTML = html;
+        }
+    }
+
+    function inPhieu() {
+        document.getElementById('print-title-area').style.display = 'block';
+        window.print();
+        setTimeout(() => {
+            document.getElementById('print-title-area').style.display = 'none';
+        }, 500);
+    }
+</script>
+
+</body>
+</html>
