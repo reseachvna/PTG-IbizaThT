@@ -293,13 +293,13 @@
     function saveSalesInfo() {
         const name = document.getElementById('sale-name').value.trim();
         const phone = document.getElementById('sale-phone').value.trim();
-        if (!name || !phone) return alert("⚠️ Vui lòng nhập đầy đủ Tên và Số điện thoại/Mã NV!");
+        if (!name || !phone) return alert("⚠️ Vui lòng nhập đầy đủ Tên và Số điện thoại");
 
         const nameRegex = /^[\p{L}\s]+$/u;
-        if (!nameRegex.test(name) || name.length < 2) return alert("⚠️ TÊN KHÔNG HỢP LỆ!\nVui lòng nhập đúng Họ và Tên (Không dùng số hoặc ký tự đặc biệt).");
+        if (!nameRegex.test(name) || name.length < 2) return alert("⚠️ TÊN KHÔNG HỢP LỆ!\Vui lòng nhập đúng Họ và Tên (Không dùng số hoặc ký tự đặc biệt).");
 
         const phoneRegex = /^[a-zA-Z0-9]+$/;
-        if (!phoneRegex.test(phone) || phone.length < 4 || phone.length > 15) return alert("⚠️ SĐT / MÃ NV KHÔNG HỢP LỆ!\nVui lòng viết liền không dấu, độ dài từ 4-15 ký tự.");
+        if (!phoneRegex.test(phone) || phone.length < 4 || phone.length > 15) return alert("⚠️ SĐT KHÔNG HỢP LỆ!\nVui lòng viết liền không dấu");
 
         localStorage.setItem('saleInfo', JSON.stringify({ name: name, phone: phone }));
         checkSalesLogin();
