@@ -3,89 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phiếu Tính Giá Flamingo Hải Tiến</title>
+    <title>Phiếu Tính Giá Flamingo IB HUB Resort</title>
     <style>
         :root {
             --primary: #1a365d;      /* Navy đậm chuyên nghiệp */
-            --secondary: #d53f8c;    /* Hồng chủ đạo của IB Hub */
-            --accent: #E76F51;       /* Màu cam nhấn của Tân Trào [cite: 4, 37] */
-            --bg-body: #f8f9fa;      /* Xám nền ngoài */
-            --bg-container: #ffffff; /* Nền kem nhẹ [cite: 6] */
-            --border-line: #E5DCD5;  /* Viền nhẹ [cite: 7] */
-            --text-main: #2D2D2D;    /* Đen mềm, dễ đọc [cite: 10] */
-            --text-label: #6B6B6B;   /* Xám mô tả [cite: 12] */
-            
-            /* Gradient cho nút "Tạo phiếu tính giá" giống Tân Trào [cite: 28, 32] */
+            --secondary: #d53f8c;    /* Hồng thương hiệu IB HUB */
+            --accent: #F4A261;       /* Cam nhấn */
+            --bg-body: #f8f9fa;
+            --bg-container: #FDF6F0; /* Nền kem nhẹ giống Tân Trào */
+            --text-main: #2D2D2D;    /* Đen mềm */
+            --text-label: #6B6B6B;   /* Xám mô tả */
             --btn-gradient: linear-gradient(135deg, #8B1E2D, #F4A261);
             --btn-gradient-hover: linear-gradient(135deg, #A32638, #FFB36B);
-            
-            /* Gradient cho hàng tiêu đề bảng bám sát màu chủ đạo IB Hub */
-            --header-gradient: linear-gradient(90deg, #1a365d, #d53f8c);
+            --table-gradient: linear-gradient(90deg, #1a365d, #d53f8c);
         }
 
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; margin: 0; padding: 20px;}
         .container { max-width: 1200px; margin: 10px auto; background: var(--bg-container); padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative;}
         
-        /* Chuyên nghiệp hóa tiêu đề [cite: 19, 21-22] */
-        .header-box { text-align: center; border-bottom: 2px solid #F4A261; margin-bottom: 25px; padding-bottom: 15px; }
+        .header-box { text-align: center; border-bottom: 2px solid var(--accent); margin-bottom: 25px; padding-bottom: 15px; }
         h1 { color: var(--primary); text-transform: uppercase; margin-bottom: 5px; font-size: 26px; letter-spacing: 1px; font-weight: bold;}
-        h2 { color: var(--secondary); font-weight: bold; margin-top: 0; font-size: 18px; text-transform: uppercase; letter-spacing: 2px;}
+        h2 { color: var(--secondary); font-weight: bold; margin-top: 0; font-size: 18px; text-transform: uppercase;}
         
         #data-status { font-weight: bold; margin-top: 15px; padding: 8px 20px; border-radius: 20px; display: inline-block; font-size: 14px;}
         .status-success { background: #E6F4EA; color: #2D6A4F; border: 1px solid #C3E6CB; }
         .status-error { background: #FDE8E8; color: #C53030; border: 1px solid #FEB2B2; }
 
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(5px);}
-        .modal-content { background: var(--bg-container); padding: 35px 30px; border-radius: 12px; width: 90%; max-width: 420px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .modal-content { background: #fff; padding: 35px 30px; border-radius: 12px; width: 90%; max-width: 420px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .sale-greeting-box { text-align: right; margin-bottom: 10px; font-size: 14px; color: var(--text-label); font-weight: 600;}
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 30px; }
         .form-group { display: flex; flex-direction: column; }
         .form-group label { font-weight: bold; margin-bottom: 8px; color: var(--text-label); font-size: 13px; text-transform: uppercase;}
         
-        /* Ô nhập liệu chuyên nghiệp [cite: 45-50] */
-        .form-group input, .form-group select { 
-            padding: 12px; 
-            border: 1px solid #D6CCC2; 
-            border-radius: 6px; 
-            font-size: 15px; 
-            background: #FFFFFF;
-            outline: none; 
-            color: var(--text-main);
-            transition: all 0.2s ease; 
-        }
-        .form-group input:focus, .form-group select:focus { 
-            border-color: #E76F51; 
-            box-shadow: 0 0 0 2px rgba(231, 111, 81, 0.2); 
-        }
+        .form-group input, .form-group select { padding: 12px; border: 1px solid #D6CCC2; border-radius: 6px; font-size: 15px; background: #FFFFFF; outline: none; transition: 0.2s; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--secondary); box-shadow: 0 0 0 2px rgba(213, 63, 140, 0.1); }
         
-        .input-readonly { background-color: #F8F9FA !important; color: var(--text-main) !important; font-weight: 600; cursor: not-allowed; border-style: dashed !important;}
+        /* Input tình trạng chữ đen mềm */
+        .input-readonly { background-color: #F8F9FA !important; color: #2D2D2D !important; font-weight: 600; cursor: not-allowed; border-style: dashed !important;}
 
         .full-width { grid-column: span 3; }
-        .mode-selector { background: #FFF4EC; border: 1px dashed #F4A261; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 30px; align-items: center; justify-content: center; }
-        .mode-selector label { cursor: pointer; font-weight: 800; display: flex; align-items: center; gap: 8px; color: var(--primary);}
+        .mode-selector { background: #FFF4EC; border: 1px dashed var(--accent); padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 30px; align-items: center; justify-content: center; }
+        .mode-selector label { cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px; color: var(--primary);}
         
         input[type="radio"] { accent-color: var(--primary); }
 
-        /* Box nhấn mạnh dịu hơn [cite: 56-57] */
-        .custom-discount-box { background: #FFF4EC; border: 1px solid #F4A261; padding: 20px; border-radius: 8px; margin-top: 10px; display: none; }
-        .extra-discount-container { background: #FFF4EC; border: 1px solid #F4A261; padding: 20px; border-radius: 8px; margin-top: 10px; }
-        
+        .custom-discount-box, .extra-discount-container { background: #FFF4EC; border: 1px solid var(--accent); padding: 20px; border-radius: 8px; margin-top: 10px; }
         .custom-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-        .custom-table th { font-size: 13px; color: var(--text-label); padding-bottom: 8px; border-bottom: 1px solid var(--border-line); margin-bottom: 8px;}
-        .custom-table td { padding-top: 8px; }
-        .custom-table input, .custom-table select { width: 95%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: #fff;}
-        .custom-table input:focus, .custom-table select:focus { border-color: #E76F51; box-shadow: 0 0 0 2px rgba(231, 111, 81, 0.2); }
-        
-        /* Nút phụ [cite: 37-39] */
-        .btn-add { background: #E76F51; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 800;}
-        .btn-add:hover { background: #F08A5D; }
-        
-        /* Nút danger [cite: 41-42] */
-        .btn-remove { background: #D62828; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold;}
-        .btn-remove:hover { background: #E63946; }
+        .custom-table th { font-size: 13px; color: var(--text-label); padding-bottom: 8px; border-bottom: 1px solid #E5DCD5;}
+        .custom-table input, .custom-table select { padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: #fff;}
 
-        /* Nút main chuyên nghiệp, in hoa tùy chỗ (Sentence case), gradient đỏ cam giống Tân Trào [cite: 28, 32-35] */
+        .btn-add { background: var(--secondary); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; }
+        .btn-remove { background: #D62828; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+
+        /* Nút tạo phiếu font thường dễ nhìn, gradient Tân Trào */
         .btn-main { 
             background: var(--btn-gradient); 
             color: white; 
@@ -101,66 +73,56 @@
             min-width: 320px;
             box-shadow: 0 4px 10px rgba(139, 30, 45, 0.25);
         }
-        .btn-main:hover { 
-            background: var(--btn-gradient-hover);
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 15px rgba(139, 30, 45, 0.4);
-        }
+        .btn-main:hover { background: var(--btn-gradient-hover); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(139, 30, 45, 0.4); }
 
-        .btn-print { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-print:hover { background: #0b0416; }
-
-        /* Nút "Dòng thu & ROI →" đã được ẩn đi. Dưới đây là dải màu merge gradient [cite: 3] */
-        #goto-index2-wrapper { display: flex; flex-direction: column; width: 100%; border-radius: 8px; overflow: hidden; margin-top: 15px; }
-        #goto-index2-wrapper .color-bar { height: 6px; width: 100%; background: var(--header-gradient); }
-        .btn-next { background: transparent; color: white; border: none; padding: 10px 20px; font-size: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; display: none; align-items: center; gap: 8px; border-radius: 0 0 8px 8px; }
-
+        .btn-print { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+        
+        #result-box { display: none; margin-top: 40px; padding-top: 30px; border-top: 2px dashed #E5DCD5; text-align: left; }
         .print-header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .result-header { color: var(--primary); margin: 0; font-size: 22px; text-transform: uppercase; font-weight: bold; }
         
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border-line);}
-        .info-item { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border-line); padding-bottom: 8px; align-items: center;}
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #E5DCD5;}
+        .info-item { display: flex; justify-content: space-between; border-bottom: 1px dashed #E5DCD5; padding-bottom: 8px; align-items: center;}
         .info-item span { color: var(--text-label); font-size: 14px;}
         .info-item strong { color: var(--primary); font-size: 15px;}
         
-        .price-highlight { background: #fff; padding: 20px; border-radius: 8px; border: 2px solid var(--primary); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(26, 54, 93, 0.05); }
-        .final-price-container { border-top: 2px dashed #feebf2; margin-top: 15px; padding-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .price-highlight { background: #FFF4EC; padding: 20px; border-radius: 8px; border: 1px solid var(--accent); margin-bottom: 30px; }
+        .final-price-container { border-top: 2px dashed var(--accent); margin-top: 15px; padding-top: 15px; display: flex; justify-content: space-between; align-items: center; }
         .final-price { color: var(--secondary); font-size: 24px; font-weight: bold; } 
-        .discount-detail { font-size: 14px; color: var(--text-main); margin-top: 15px; padding-left: 15px; border-left: 3px solid var(--primary); line-height: 1.8;}
+        .discount-detail { font-size: 14px; color: var(--text-main); margin-top: 10px; padding-left: 15px; border-left: 3px solid var(--secondary); line-height: 1.8;}
 
         .schedule-header { color: var(--primary); margin-top: 25px; font-size: 16px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;}
         
-        table.schedule-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
-        
-        /* Dải màu merge gradient cho cả hàng tiêu đề [cite: 3] */
-        .schedule-table th { background: var(--header-gradient) !important; color: white !important; padding: 12px 10px; border: none; text-align: center; font-size: 13px; font-weight: bold;}
-        .schedule-table td { border: 1px solid var(--border-line); padding: 10px; vertical-align: middle; font-size: 14px; color: var(--text-main);}
-        .schedule-table tr:nth-child(even) { background: #fbfdff; }
+        /* Merge màu gradient cho hàng tiêu đề bảng */
+        table.schedule-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #fff; }
+        .schedule-table th { background: var(--table-gradient) !important; color: white !important; padding: 12px 10px; border: none; text-align: center; font-size: 13px; font-weight: bold;}
+        .schedule-table td { border: 1px solid #E5DCD5; padding: 10px; vertical-align: middle; font-size: 14px; color: var(--text-main);}
+        .schedule-table tr:nth-child(even) { background: #FDF6F0; }
         .td-center { text-align: center; }
         .td-right { text-align: right; }
 
-        .copyright-footer { text-align: right; margin-top: 20px; border-top: 1px dashed var(--border-line); padding-top: 10px; font-size: 12px; color: var(--text-label); font-style: italic; }
+        .copyright-footer { text-align: right; margin-top: 20px; border-top: 1px dashed #E5DCD5; padding-top: 10px; font-size: 12px; color: var(--text-label); font-style: italic; }
         .copyright-footer strong { color: var(--primary); font-weight: bold; font-style: normal;}
 
-        @page { size: A4 portrait; margin: 10mm 10mm; }
+        @page { margin: 10mm; }
 
         @media print {
             .no-print { display: none !important; }
+            * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
             body { font-size: 11px; line-height: 1.3; color: #000; background: #fff; }
-            .container { box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; border: none;}
+            .container { box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; border: none; background: #fff;}
             #result-box { display: block !important; margin-top: 0; padding-top: 0; border: none; }
-            #print-title-area { display: block !important; margin-bottom: 15px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
-            h1 { font-size: 18px; margin-bottom: 2px; }
-            h2 { font-size: 14px; margin-bottom: 0px; }
-            .result-header { font-size: 15px; margin-bottom: 10px; }
+            .header-box { display: block !important; margin-bottom: 15px; border-bottom: 2px solid #F4A261; padding-bottom: 10px;}
+            h1 { font-size: 18px; margin-bottom: 2px; color: #1a365d !important; }
+            h2 { font-size: 14px; margin-bottom: 0px; color: #d53f8c !important;}
+            .result-header { font-size: 15px; margin-bottom: 10px; color: #1a365d !important; border-bottom: 1px solid #000; }
             .info-grid { gap: 10px; margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; background: #fff; }
-            .info-item { padding-bottom: 2px; }
-            .price-highlight { padding: 10px 15px; margin-bottom: 15px; border-color: #999; background: transparent; }
-            table.schedule-table { margin-bottom: 10px; border: 1px solid #999;}
-            .schedule-table th { background: #eee !important; color: #000 !important; padding: 6px; font-size: 11px; }
-            .schedule-table td { padding: 6px; font-size: 11px; border-color: #999; color: #000; }
+            .price-highlight { padding: 10px 15px; margin-bottom: 15px; border: 1px solid #F4A261; background: #FFF4EC !important; }
+            table.schedule-table { margin-bottom: 10px; border: 1px solid #ccc;}
+            .schedule-table th { background: #1a365d !important; color: #fff !important; padding: 6px; font-size: 11px; }
+            .schedule-table td { padding: 6px; font-size: 11px; border-color: #ccc; color: #000; }
             tr { page-break-inside: avoid; }
-            .copyright-footer { color: #666; border-top: 1px solid #999; margin-top: 10px; padding-top: 5px; }
+            .copyright-footer { color: #666 !important; border-top: 1px solid #999; margin-top: 10px; padding-top: 5px; }
         }
 
         @media screen and (max-width: 768px) {
@@ -173,7 +135,6 @@
             .mode-selector { flex-direction: column; gap: 15px; }
             .btn-main { width: 100%; min-width: unset; margin: 15px 0; }
             .print-header-actions { flex-direction: column; align-items: stretch; gap: 15px; text-align: center; }
-            .action-buttons { flex-direction: column; display: flex; gap: 10px;}
             .custom-table, .schedule-table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;}
         }
     </style>
@@ -188,7 +149,7 @@
         <div class="form-group" style="margin-bottom: 15px; text-align:left;">
             <label>Tên chuyên viên tư vấn (*)</label>
             <input type="text" id="sale-name" placeholder="Ví dụ: Dương Minh">
-            <span style="font-size: 11px; color: #D62828; margin-top: 4px; font-style: italic;">* Yêu cầu nhập họ tên (Không chứa số).</span>
+            <span style="font-size: 11px; color: #D62828; margin-top: 4px; font-style: italic;">* Vui lòng nhập họ tên Sale.</span>
         </div>
         <div class="form-group" style="margin-bottom: 25px; text-align:left;">
             <label>Số điện thoại (*)</label>
@@ -196,7 +157,7 @@
             <span style="font-size: 11px; color: #D62828; margin-top: 4px; font-style: italic;">* Viết liền không dấu.</span>
         </div>
         
-        <button class="btn-main" style="margin-top:0;" onclick="saveSalesInfo()">XÁC NHẬN BẮT ĐẦU</button>
+        <button class="btn-main" style="margin-top:0;" onclick="saveSalesInfo()">Xác nhận bắt đầu</button>
     </div>
 </div>
 
@@ -208,9 +169,9 @@
     </div>
 
     <div class="header-box no-print">
-        <h1>Phiếu tính giá & Tiến độ thanh toán</h1>
+        <h1>Bảng tính giá & Tiến độ thanh toán</h1>
         <h2>Flamingo IB HUB Resort</h2>
-        <div id="data-status" class="status-success">⏳ Đang khởi động hệ thống...</div>
+        <div id="data-status" class="status-success">⏳ Đang tải dữ liệu...</div>
     </div>
 
     <div class="mode-selector no-print">
@@ -225,7 +186,7 @@
         </div>
         <div class="form-group">
             <label>Mã sản phẩm</label>
-            <input type="text" id="apt-code" placeholder="Ví dụ: VT2.02">
+            <input type="text" id="apt-code" placeholder="Ví dụ: MN1.06" autocomplete="off">
         </div>
         <div class="form-group">
             <label>Ngày đặt cọc</label>
@@ -234,14 +195,13 @@
         
         <div class="form-group">
             <label>Tình trạng sản phẩm</label>
-            <input type="text" id="apt-status" class="input-readonly" readonly placeholder="Mã không hợp lệ...">
+            <input type="text" id="apt-status" class="input-readonly" readonly placeholder="Chờ nhập mã...">
         </div>
         
         <div class="form-group" style="grid-column: span 2;">
             <label>Phương thức thanh toán</label>
             <select id="payment-plan">
-                <option value="">Thanh toán 12 tháng (Tiến độ Đất/Xây riêng biệt)</option>
-                <option value="">Thanh toán theo tiến độ chuẩn</option>
+                <option value="">Vui lòng nhập mã căn...</option>
             </select>
         </div>
 
@@ -249,7 +209,7 @@
             <div class="extra-discount-container">
                 <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; cursor: pointer; color: var(--primary);">
                     <input type="checkbox" id="enable-extra" onchange="toggleExtraDetails()">
-                    <strong>ÁP DỤNG CHIẾT KHẤU BỔ SUNG (LŨY KẾ TRÊN TIỀN ĐẤT)</strong>
+                    <strong>Áp dụng chiết khấu bổ sung (Tính lũy kế trên tiền Đất)</strong>
                 </label>
                 
                 <div id="extra-details-area" style="display: none;">
@@ -272,8 +232,8 @@
                                 </td>
                                 <td>
                                     <select class="ex-base">
-                                        <option value="after-vat">Giá trị Đất sau CK trước (Gồm VAT)</option>
-                                        <option value="before-vat">Giá trị Đất sau CK trước (Chưa VAT)</option>
+                                        <option value="after-vat">Giá tiền Đất sau CK trước (Gồm VAT)</option>
+                                        <option value="before-vat">Giá tiền Đất sau CK trước (Chưa VAT)</option>
                                     </select>
                                 </td>
                                 <td><input type="number" class="ex-value" placeholder="Nhập số..." step="0.1"></td>
@@ -288,9 +248,9 @@
     </div>
 
     <div id="custom-discount-box" class="custom-discount-box no-print">
-        <label style="font-weight: 800; color: #F72585; margin-bottom: 15px; display: inline-block; text-transform: uppercase;">Nhập thủ công các mục chiết khấu (Lũy kế trên Tiền Đất):</label>
+        <label style="font-weight: bold; color: var(--secondary); margin-bottom: 10px; display: inline-block;">Nhập thủ công các mục chiết khấu (Lũy kế trên tiền Đất):</label>
         <table class="custom-table">
-            <thead><tr><th style="text-align: left;">Nội dung / Lý do</th><th style="text-align: left;">Tỷ lệ (%)</th><th></th></tr></thead>
+            <thead><tr><th style="text-align: left;">Nội dung/Lý do</th><th style="text-align: left;">Tỷ lệ (%)</th><th></th></tr></thead>
             <tbody id="custom-body">
                 <tr>
                     <td><input type="text" class="c-name" placeholder="Ví dụ: Voucher ngoại giao..."></td>
@@ -306,328 +266,14 @@
 
     <div id="result-box">
         <div class="header-box" style="display: none;" id="print-title-area">
-            <h1>Phiếu tính giá & Tiến độ thanh toánChào bạn,
-
-Dựa trên các note cụ thể của bạn trên hình ảnh và yêu cầu chung, tôi đã sửa lại giao diện Flamingo IB Hub Resort để làm cho nó chuyên nghiệp, sang trọng và thân thiện hơn. Font chữ được điều chỉnh dùng Sentence case (chữ thường đầu câu) cho CTA chính, in hoa chỉ dùng cho các tiêu đề quan trọng. Nút bấm được làm tương tự dự án Tân Trào. Text "Chưa xây dựng" được đổi sang màu đen mềm. Nút "Dòng thu & ROI →" đã được ẩn đi. Tiêu đề bảng được merge màu gradient cho cả dải. Dưới đây là mã HTML/CSS đã sửa đổi:
-
-```html
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phiếu Tính Giá Flamingo IB Hub Resort</title>
-    <style>
-        :root {
-            --primary: #1a365d;      /* Navy đậm chuyên nghiệp */
-            --secondary: #d53f8c;    /* Hồng chủ đạo của IB Hub */
-            --accent: #E76F51;       /* Màu cam nhấn của Tân Trào [cite: 4, 37] */
-            --bg-body: #f8f9fa;      /* Xám nền ngoài */
-            --bg-container: #ffffff; /* Nền kem nhẹ [cite: 6] */
-            --border-line: #E5DCD5;  /* Viền nhẹ [cite: 7] */
-            --text-main: #2D2D2D;    /* Đen mềm, dễ đọc [cite: 10] */
-            --text-label: #6B6B6B;   /* Xám mô tả [cite: 12] */
-            
-            /* Gradient cho nút "Tạo phiếu tính giá" giống Tân Trào [cite: 28, 32] */
-            --btn-gradient: linear-gradient(135deg, #8B1E2D, #F4A261);
-            --btn-gradient-hover: linear-gradient(135deg, #A32638, #FFB36B);
-            
-            /* Gradient cho hàng tiêu đề bảng bám sát màu chủ đạo IB Hub */
-            --header-gradient: linear-gradient(90deg, #1a365d, #d53f8c);
-        }
-
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; margin: 0; padding: 20px;}
-        .container { max-width: 1200px; margin: 10px auto; background: var(--bg-container); padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative;}
-        
-        /* Chuyên nghiệp hóa tiêu đề [cite: 19, 21-22] */
-        .header-box { text-align: center; border-bottom: 2px solid #F4A261; margin-bottom: 25px; padding-bottom: 15px; }
-        h1 { color: var(--primary); text-transform: uppercase; margin-bottom: 5px; font-size: 26px; letter-spacing: 1px; font-weight: bold;}
-        h2 { color: var(--secondary); font-weight: bold; margin-top: 0; font-size: 18px; text-transform: uppercase; letter-spacing: 2px;}
-        
-        #data-status { font-weight: bold; margin-top: 15px; padding: 8px 20px; border-radius: 20px; display: inline-block; font-size: 14px;}
-        .status-success { background: #E6F4EA; color: #2D6A4F; border: 1px solid #C3E6CB; }
-        .status-error { background: #FDE8E8; color: #C53030; border: 1px solid #FEB2B2; }
-
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(5px);}
-        .modal-content { background: var(--bg-container); padding: 35px 30px; border-radius: 12px; width: 90%; max-width: 420px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .sale-greeting-box { text-align: right; margin-bottom: 10px; font-size: 14px; color: var(--text-label); font-weight: 600;}
-
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 30px; }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group label { font-weight: bold; margin-bottom: 8px; color: var(--text-label); font-size: 13px; text-transform: uppercase;}
-        
-        /* Ô nhập liệu chuyên nghiệp [cite: 45-50] */
-        .form-group input, .form-group select { 
-            padding: 12px; 
-            border: 1px solid #D6CCC2; 
-            border-radius: 6px; 
-            font-size: 15px; 
-            background: #FFFFFF;
-            outline: none; 
-            color: var(--text-main);
-            transition: all 0.2s ease; 
-        }
-        .form-group input:focus, .form-group select:focus { 
-            border-color: #E76F51; 
-            box-shadow: 0 0 0 2px rgba(231, 111, 81, 0.2); 
-        }
-        
-        .input-readonly { background-color: #F8F9FA !important; color: var(--text-main) !important; font-weight: 600; cursor: not-allowed; border-style: dashed !important;}
-
-        .full-width { grid-column: span 3; }
-        .mode-selector { background: #FFF4EC; border: 1px dashed #F4A261; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 30px; align-items: center; justify-content: center; }
-        .mode-selector label { cursor: pointer; font-weight: 800; display: flex; align-items: center; gap: 8px; color: var(--primary);}
-        
-        input[type="radio"] { accent-color: var(--primary); }
-
-        /* Box nhấn mạnh dịu hơn [cite: 56-57] */
-        .custom-discount-box { background: #FFF4EC; border: 1px solid #F4A261; padding: 20px; border-radius: 8px; margin-top: 10px; display: none; }
-        .extra-discount-container { background: #FFF4EC; border: 1px solid #F4A261; padding: 20px; border-radius: 8px; margin-top: 10px; }
-        
-        .custom-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-        .custom-table th { font-size: 13px; color: var(--text-label); padding-bottom: 8px; border-bottom: 1px solid var(--border-line); margin-bottom: 8px;}
-        .custom-table td { padding-top: 8px; }
-        .custom-table input, .custom-table select { width: 95%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: #fff;}
-        .custom-table input:focus, .custom-table select:focus { border-color: #E76F51; box-shadow: 0 0 0 2px rgba(231, 111, 81, 0.2); }
-        
-        /* Nút phụ [cite: 37-39] */
-        .btn-add { background: #E76F51; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 800;}
-        .btn-add:hover { background: #F08A5D; }
-        
-        /* Nút danger [cite: 41-42] */
-        .btn-remove { background: #D62828; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold;}
-        .btn-remove:hover { background: #E63946; }
-
-        /* Nút main chuyên nghiệp, in hoa tùy chỗ (Sentence case), gradient đỏ cam giống Tân Trào [cite: 28, 32-35] */
-        .btn-main { 
-            background: var(--btn-gradient); 
-            color: white; 
-            border: none; 
-            padding: 16px 40px; 
-            border-radius: 30px; 
-            font-size: 18px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            display: block; 
-            margin: 20px auto; 
-            min-width: 320px;
-            box-shadow: 0 4px 10px rgba(139, 30, 45, 0.25);
-        }
-        .btn-main:hover { 
-            background: var(--btn-gradient-hover);
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 15px rgba(139, 30, 45, 0.4);
-        }
-
-        .btn-print { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-print:hover { background: #0b0416; }
-
-        /* Nút "Dòng thu & ROI →" đã được ẩn đi. Dưới đây là dải màu merge gradient [cite: 3] */
-        #goto-index2-wrapper { display: flex; flex-direction: column; width: 100%; border-radius: 8px; overflow: hidden; margin-top: 15px; }
-        #goto-index2-wrapper .color-bar { height: 6px; width: 100%; background: var(--header-gradient); }
-        .btn-next { background: transparent; color: white; border: none; padding: 10px 20px; font-size: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; display: none; align-items: center; gap: 8px; border-radius: 0 0 8px 8px; }
-
-        .print-header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .result-header { color: var(--primary); margin: 0; font-size: 22px; text-transform: uppercase; font-weight: bold; }
-        
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border-line);}
-        .info-item { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border-line); padding-bottom: 8px; align-items: center;}
-        .info-item span { color: var(--text-label); font-size: 14px;}
-        .info-item strong { color: var(--primary); font-size: 15px;}
-        
-        .price-highlight { background: #fff; padding: 20px; border-radius: 8px; border: 2px solid var(--primary); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(26, 54, 93, 0.05); }
-        .final-price-container { border-top: 2px dashed #feebf2; margin-top: 15px; padding-top: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .final-price { color: var(--secondary); font-size: 24px; font-weight: bold; } 
-        .discount-detail { font-size: 14px; color: var(--text-main); margin-top: 15px; padding-left: 15px; border-left: 3px solid var(--primary); line-height: 1.8;}
-
-        .schedule-header { color: var(--primary); margin-top: 25px; font-size: 16px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;}
-        
-        table.schedule-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
-        
-        /* Dải màu merge gradient cho cả hàng tiêu đề [cite: 3] */
-        .schedule-table th { background: var(--header-gradient) !important; color: white !important; padding: 12px 10px; border: none; text-align: center; font-size: 13px; font-weight: bold;}
-        .schedule-table td { border: 1px solid var(--border-line); padding: 10px; vertical-align: middle; font-size: 14px; color: var(--text-main);}
-        .schedule-table tr:nth-child(even) { background: #fbfdff; }
-        .td-center { text-align: center; }
-        .td-right { text-align: right; }
-
-        .copyright-footer { text-align: right; margin-top: 20px; border-top: 1px dashed var(--border-line); padding-top: 10px; font-size: 12px; color: var(--text-label); font-style: italic; }
-        .copyright-footer strong { color: var(--primary); font-weight: bold; font-style: normal;}
-
-        @page { size: A4 portrait; margin: 10mm 10mm; }
-
-        @media print {
-            .no-print { display: none !important; }
-            body { font-size: 11px; line-height: 1.3; color: #000; background: #fff; }
-            .container { box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; border: none;}
-            #result-box { display: block !important; margin-top: 0; padding-top: 0; border: none; }
-            #print-title-area { display: block !important; margin-bottom: 15px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
-            h1 { font-size: 18px; margin-bottom: 2px; }
-            h2 { font-size: 14px; margin-bottom: 0px; }
-            .result-header { font-size: 15px; margin-bottom: 10px; }
-            .info-grid { gap: 10px; margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; background: #fff; }
-            .info-item { padding-bottom: 2px; }
-            .price-highlight { padding: 10px 15px; margin-bottom: 15px; border-color: #999; background: transparent; }
-            table.schedule-table { margin-bottom: 10px; border: 1px solid #999;}
-            .schedule-table th { background: #eee !important; color: #000 !important; padding: 6px; font-size: 11px; }
-            .schedule-table td { padding: 6px; font-size: 11px; border-color: #999; color: #000; }
-            tr { page-break-inside: avoid; }
-            .copyright-footer { color: #666; border-top: 1px solid #999; margin-top: 10px; padding-top: 5px; }
-        }
-
-        @media screen and (max-width: 768px) {
-            body { padding: 10px; }
-            .container { padding: 20px; margin: 0; }
-            h1 { font-size: 20px; }
-            .form-grid { grid-template-columns: 1fr; gap: 15px; }
-            .full-width { grid-column: span 1; }
-            .info-grid { grid-template-columns: 1fr; gap: 15px; }
-            .mode-selector { flex-direction: column; gap: 15px; }
-            .btn-main { width: 100%; min-width: unset; margin: 15px 0; }
-            .print-header-actions { flex-direction: column; align-items: stretch; gap: 15px; text-align: center; }
-            .action-buttons { flex-direction: column; display: flex; gap: 10px;}
-            .custom-table, .schedule-table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;}
-        }
-    </style>
-</head>
-<body>
-
-<div id="sales-modal" class="modal-overlay no-print">
-    <div class="modal-content">
-        <h3 style="color:var(--primary); margin-top:0; font-size: 20px; font-weight: 800;">ĐĂNG NHẬP HỆ THỐNG</h3>
-        <p style="font-size:14px; color:var(--text-label); margin-bottom: 25px;">Hệ thống tính giá Flamingo IB HUB</p>
-        
-        <div class="form-group" style="margin-bottom: 15px; text-align:left;">
-            <label>Tên chuyên viên tư vấn (*)</label>
-            <input type="text" id="sale-name" placeholder="Ví dụ: Dương Minh">
-            <span style="font-size: 11px; color: #D62828; margin-top: 4px; font-style: italic;">* Yêu cầu nhập họ tên (Không chứa số).</span>
-        </div>
-        <div class="form-group" style="margin-bottom: 25px; text-align:left;">
-            <label>Số điện thoại (*)</label>
-            <input type="text" id="sale-phone" placeholder="Ví dụ: 0987654321">
-            <span style="font-size: 11px; color: #D62828; margin-top: 4px; font-style: italic;">* Viết liền không dấu.</span>
-        </div>
-        
-        <button class="btn-main" style="margin-top:0;" onclick="saveSalesInfo()">XÁC NHẬN BẮT ĐẦU</button>
-    </div>
-</div>
-
-<div class="container">
-    
-    <div id="sale-greeting" class="sale-greeting-box no-print" style="display:none;">
-        👤 Đang tư vấn bởi: <strong id="current-sale-name" style="color:var(--secondary);">...</strong> 
-        <a href="#" onclick="logoutSales(); return false;" style="color:var(--text-label); text-decoration:underline; margin-left: 10px; font-size: 13px;">(Đổi User)</a>
-    </div>
-
-    <div class="header-box no-print">
-        <h1>Phiếu tính giá & Tiến độ thanh toán</h1>
-        <h2>Flamingo IB HUB Resort</h2>
-        <div id="data-status" class="status-success">⏳ Đang khởi động hệ thống...</div>
-    </div>
-
-    <div class="mode-selector no-print">
-        <label><input type="radio" name="calc-mode" value="auto" checked onchange="toggleMode()"> TÍNH TỰ ĐỘNG</label>
-        <label><input type="radio" name="calc-mode" value="custom" onchange="toggleMode()"> TÙY CHỈNH (NGOẠI GIAO)</label>
-    </div>
-
-    <div class="form-grid no-print">
-        <div class="form-group">
-            <label>Tên khách hàng</label>
-            <input type="text" id="fullname" placeholder="Họ và tên khách hàng...">
-        </div>
-        <div class="form-group">
-            <label>Mã sản phẩm</label>
-            <input type="text" id="apt-code" placeholder="Ví dụ: VT2.02">
-        </div>
-        <div class="form-group">
-            <label>Ngày đặt cọc</label>
-            <input type="date" id="deposit-date">
-        </div>
-        
-        <div class="form-group">
-            <label>Tình trạng sản phẩm</label>
-            <input type="text" id="apt-status" class="input-readonly" readonly placeholder="Mã không hợp lệ...">
-        </div>
-        
-        <div class="form-group" style="grid-column: span 2;">
-            <label>Phương thức thanh toán</label>
-            <select id="payment-plan">
-                <option value="">Thanh toán 12 tháng (Tiến độ Đất/Xây riêng biệt)</option>
-                <option value="">Thanh toán theo tiến độ chuẩn</option>
-            </select>
-        </div>
-
-        <div class="form-group full-width no-print" id="auto-extra-discount-box">
-            <div class="extra-discount-container">
-                <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; cursor: pointer; color: var(--primary);">
-                    <input type="checkbox" id="enable-extra" onchange="toggleExtraDetails()">
-                    <strong>ÁP DỤNG CHIẾT KHẤU BỔ SUNG (LŨY KẾ TRÊN TIỀN ĐẤT)</strong>
-                </label>
-                
-                <div id="extra-details-area" style="display: none;">
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Loại chiết khấu</th>
-                                <th>Mốc áp dụng</th>
-                                <th>Giá trị (% / VNĐ)</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="extra-body">
-                            <tr>
-                                <td>
-                                    <select class="ex-type" onchange="handleExTypeChange(this)">
-                                        <option value="percent">Tỷ lệ (%)</option>
-                                        <option value="amount">Số tiền (VNĐ)</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="ex-base">
-                                        <option value="after-vat">Giá trị Đất sau CK trước (Gồm VAT)</option>
-                                        <option value="before-vat">Giá trị Đất sau CK trước (Chưa VAT)</option>
-                                    </select>
-                                </td>
-                                <td><input type="number" class="ex-value" placeholder="Nhập số..." step="0.1"></td>
-                                <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn-add" onclick="addExtraRow()">+ Thêm dòng chiết khấu</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="custom-discount-box" class="custom-discount-box no-print">
-        <label style="font-weight: 800; color: #F72585; margin-bottom: 15px; display: inline-block; text-transform: uppercase;">Nhập thủ công các mục chiết khấu (Lũy kế trên Tiền Đất):</label>
-        <table class="custom-table">
-            <thead><tr><th style="text-align: left;">Nội dung / Lý do</th><th style="text-align: left;">Tỷ lệ (%)</th><th></th></tr></thead>
-            <tbody id="custom-body">
-                <tr>
-                    <td><input type="text" class="c-name" placeholder="Ví dụ: Voucher ngoại giao..."></td>
-                    <td><input type="number" class="c-rate" value="0" step="0.1"></td>
-                    <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <button class="btn-add" onclick="addCustomRow()">+ Thêm dòng chiết khấu</button>
-    </div>
-
-    <button class="btn-main no-print" onclick="calculate()">Tạo phiếu tính giá</button>
-
-    <div id="result-box">
-        <div class="header-box" style="display: none;" id="print-title-area">
-            <h1>Phiếu tính giá & Tiến độ thanh toán</h1>
+            <h1>Bảng tính giá & Tiến độ thanh toán</h1>
             <h2>Flamingo IB HUB Resort</h2>
         </div>
 
         <div class="print-header-actions">
             <h3 class="result-header">CHI TIẾT PHIẾU TÍNH GIÁ</h3>
             <div class="action-buttons no-print">
-                <button class="btn-print" onclick="inPhieu()">🖨️ IN PHIẾU / LƯU PDF</button>
-                <button class="btn-next" onclick="calculate()">DÒNG THU & ROI →</button>
+                <button class="btn-print" onclick="inPhieu()">🖨️ Tải PDF / In phiếu</button>
             </div>
         </div>
         
@@ -641,20 +287,20 @@ Dựa trên các note cụ thể của bạn trên hình ảnh và yêu cầu ch
         <div class="price-highlight">
             <div class="info-item" style="border:none; padding-bottom: 0;"><span>Giá trị Đất (gồm VAT):</span> <strong id="out-price-land"></strong></div>
             <div class="info-item" style="border:none; padding-bottom: 0;"><span>Giá trị Xây dựng (gồm VAT):</span> <strong id="out-price-build"></strong></div>
-            <div class="info-item" style="border:none; padding-bottom: 0; margin-top: 10px;"><span>Tổng giá niêm yết:</span> <strong id="out-price-raw" style="font-size: 20px; color: var(--primary)"></strong></div>
+            <div class="info-item" style="border:none; padding-bottom: 0; margin-top: 5px;"><span>Tổng giá niêm yết:</span> <strong id="out-price-raw" style="font-size: 18px; color: var(--primary)"></strong></div>
             
-            <div style="margin-top: 25px; font-weight: 800; color: var(--text-main); text-transform: uppercase;">Chi tiết chiết khấu (Trừ trực tiếp vào Tiền Đất):</div>
+            <div style="margin-top: 15px; font-weight: bold; color: var(--text-main);">Chi tiết áp dụng chiết khấu (Được trừ trực tiếp vào tiền Đất):</div>
             <div id="discount-breakdown" class="discount-detail"></div>
             
             <div class="final-price-container">
-                <span style="font-size: 20px; color: var(--text-main); font-weight: 900;">TỔNG GIÁ SAU CHIẾT KHẤU:</span>
+                <span style="font-size: 18px; color: var(--text-main); font-weight: bold;">TỔNG GIÁ SAU CHIẾT KHẤU:</span>
                 <span class="final-price" id="out-price-final"></span>
             </div>
         </div>
 
         <div id="schedule-content"></div>
 
-        <div style="margin-top: 40px; text-align: right; color: var(--text-label); font-size: 13px; font-weight: 600;">
+        <div style="margin-top: 30px; text-align: right; color: var(--text-label); font-size: 13px;">
             Ngày xuất phiếu: <span id="current-print-date"></span>
         </div>
 
@@ -665,22 +311,294 @@ Dựa trên các note cụ thể của bạn trên hình ảnh và yêu cầu ch
 </div>
 
 <script>
-    const saved = localStorage.getItem('dataStep1');
-    if (saved) {
-        const data = JSON.parse(saved);
-        document.getElementById('in-ma-can').value = data.maCan || "";
-        document.getElementById('in-gia-ny').value = fmt.format(data.giaNiemYet);
-        document.getElementById('in-tong-ck').value = fmt.format(data.tongChietKhau || 0);
-        document.getElementById('in-gia-sau-ck').value = fmt.format(giaSauCK);
-        document.getElementById('in-thang-bg').value = data.thangBG || 11;
-        document.getElementById('in-nam-bg').value = data.namBG || 2026;
+    let masterData = [];
 
-        document.getElementById('disp-gia-sau-ck').innerText = fmt.format(giaSauCK) + " VNĐ";
-        document.getElementById('disp-von-50').innerText = fmt.format(von50) + " VNĐ";
-        document.getElementById('disp-tong-ck').innerText = fmt.format(data.tongChietKhau || 0) + " VNĐ";
-        
-        document.getElementById('res-von-thuc').innerText = fmt.format(von50) + " VNĐ";
+    function checkSalesLogin() {
+        const saleInfo = localStorage.getItem('saleInfo');
+        if (!saleInfo) {
+            document.getElementById('sales-modal').style.display = 'flex';
+            document.getElementById('sale-greeting').style.display = 'none';
+        } else {
+            const info = JSON.parse(saleInfo);
+            document.getElementById('current-sale-name').innerText = info.name;
+            document.getElementById('sales-modal').style.display = 'none';
+            document.getElementById('sale-greeting').style.display = 'block';
+        }
     }
+
+    function saveSalesInfo() {
+        const name = document.getElementById('sale-name').value.trim();
+        const phone = document.getElementById('sale-phone').value.trim();
+        if (!name || !phone) return alert("⚠️ Vui lòng nhập đủ Tên và SĐT!");
+        const nameRegex = /^[\p{L}\s]+$/u;
+        if (!nameRegex.test(name) || name.length < 2) return alert("⚠️ Tên không hợp lệ!");
+        localStorage.setItem('saleInfo', JSON.stringify({ name: name, phone: phone }));
+        checkSalesLogin();
+    }
+
+    function logoutSales() {
+        if(confirm("Đăng xuất tài khoản này?")) {
+            localStorage.removeItem('saleInfo');
+            location.reload();
+        }
+    }
+
+    const layGiaTriCot = (item, tenCotCanTim) => {
+        if (!item) return null;
+        const cleanTarget = tenCotCanTim.trim().toLowerCase();
+        const foundKey = Object.keys(item).find(k => k.trim().toLowerCase() === cleanTarget);
+        return foundKey ? item[foundKey] : null;
+    };
+
+    function findApt(code) {
+        if(!code) return null;
+        const cleanInputCode = code.toUpperCase().trim();
+        return masterData.find(item => {
+            const maCanJSON = String(item.ma_can || item.Ma_can || "").toUpperCase().trim();
+            return maCanJSON === cleanInputCode;
+        });
+    }
+
+    // Logic quét real-time chuẩn Tân Trào
+    document.getElementById('apt-code').addEventListener('input', function() {
+        if(masterData.length === 0) return;
+        const code = this.value.toUpperCase().trim();
+        const statusEl = document.getElementById('apt-status');
+        const planSelect = document.getElementById('payment-plan');
+        
+        if (code === "") {
+            statusEl.value = "Chờ nhập mã...";
+            statusEl.setAttribute('data-val', "");
+            planSelect.innerHTML = "<option value=''>Vui lòng nhập mã căn...</option>";
+            return;
+        }
+
+        const apt = findApt(code);
+        if(apt) {
+            // Quét trường Note chuẩn True/False
+            let noteRaw = String(layGiaTriCot(apt, "Note") || "").toUpperCase().trim();
+            let statusVal = (noteRaw === "FALSE") ? "ChuaXay" : "DaXay";
+            let statusText = (statusVal === 'ChuaXay') ? "Chưa xây dựng" : "Đã xây dựng";
+
+            if (statusEl.getAttribute('data-val') !== statusVal) {
+                statusEl.value = statusText;
+                statusEl.setAttribute('data-val', statusVal);
+                updatePaymentPlans(statusVal);
+            }
+        } else {
+            statusEl.value = "Mã không tồn tại...";
+            statusEl.setAttribute('data-val', "");
+            planSelect.innerHTML = "<option value=''>Mã căn không tồn tại...</option>";
+        }
+    });
+
+    function updatePaymentPlans(status) {
+        const planSelect = document.getElementById('payment-plan');
+        planSelect.innerHTML = "";
+        if(status === 'DaXay') {
+            planSelect.innerHTML += `<option value="36">Phương án 36 tháng (Tiêu chuẩn)</option>`;
+            planSelect.innerHTML += `<option value="12">Phương án 12 tháng (CK 7.5% trên tiền Đất)</option>`;
+            planSelect.innerHTML += `<option value="30">Thanh toán nhanh 30 ngày (CK 15% trên tiền Đất)</option>`;
+        } else {
+            planSelect.innerHTML += `<option value="12">Thanh toán 12 tháng (Tiến độ Đất/Xây riêng biệt)</option>`;
+            planSelect.innerHTML += `<option value="30">Thanh toán sớm tiền Đất 30 ngày (CK 7% trên tiền Đất)</option>`;
+        }
+    }
+
+    function initApp() {
+        checkSalesLogin();
+        const statusEl = document.getElementById('data-status');
+        document.getElementById('deposit-date').valueAsDate = new Date();
+        fetch('Data.json?v=' + new Date().getTime())
+            .then(res => res.json())
+            .then(data => {
+                masterData = Array.isArray(data) ? data : data[Object.keys(data)[0]];
+                statusEl.innerHTML = "✓ Hệ thống đã sẵn sàng!";
+                statusEl.className = "status-success";
+                restoreFormState();
+            })
+            .catch(err => {
+                statusEl.innerHTML = "⚠️ Lỗi tải dữ liệu!";
+                statusEl.className = "status-error";
+            });
+    }
+
+    function restoreFormState() {
+        const stateStr = sessionStorage.getItem('ibiza_form_state');
+        if (stateStr) {
+            try {
+                const state = JSON.parse(stateStr);
+                document.getElementById('fullname').value = state.fullname || '';
+                if(state.aptCode) {
+                    document.getElementById('apt-code').value = state.aptCode;
+                    document.getElementById('apt-code').dispatchEvent(new Event('input'));
+                }
+                setTimeout(() => {
+                    if(state.plan) document.getElementById('payment-plan').value = state.plan;
+                    if (state.aptCode && document.getElementById('apt-status').getAttribute('data-val')) calculate(true);
+                }, 100);
+            } catch (e) {}
+        }
+    }
+
+    initApp();
+
+    function toggleMode() {
+        const mode = document.querySelector('input[name="calc-mode"]:checked').value;
+        document.getElementById('custom-discount-box').style.display = (mode === 'custom' ? 'block' : 'none');
+        document.getElementById('auto-extra-discount-box').style.display = (mode === 'auto' ? 'block' : 'none');
+    }
+
+    function toggleExtraDetails() {
+        const isChecked = document.getElementById('enable-extra').checked;
+        document.getElementById('extra-details-area').style.display = isChecked ? 'block' : 'none';
+    }
+
+    function handleExTypeChange(el) {
+        const row = el.closest('tr');
+        const baseSelect = row.querySelector('.ex-base');
+        baseSelect.disabled = (el.value === 'amount');
+    }
+
+    function addExtraRow() {
+        const row = `<tr>
+            <td><select class="ex-type" onchange="handleExTypeChange(this)"><option value="percent">Tỷ lệ (%)</option><option value="amount">Số tiền (VNĐ)</option></select></td>
+            <td><select class="ex-base"><option value="after-vat">Giá tiền Đất sau CK trước (Gồm VAT)</option><option value="before-vat">Giá tiền Đất sau CK trước (Chưa VAT)</option></select></td>
+            <td><input type="number" class="ex-value" placeholder="Nhập số..." step="0.1"></td>
+            <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+        </tr>`;
+        document.getElementById('extra-body').insertAdjacentHTML('beforeend', row);
+    }
+
+    function addCustomRow() {
+        const row = `<tr><td><input type="text" class="c-name" placeholder="..."></td><td><input type="number" class="c-rate" value="0" step="0.1"></td><td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td></tr>`;
+        document.getElementById('custom-body').insertAdjacentHTML('beforeend', row);
+    }
+
+    function cleanAndParsePrice(val) {
+        if (!val) return 0;
+        let cleanVal = String(val).replace(/\s+/g, '').replace(/[^0-9]/g, '');
+        return Number(cleanVal) || 0;
+    }
+
+    function formatMoney(num) { return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Math.round(num)); }
+
+    function getFormattedDate(dateObj) { return `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`; }
+
+    function calculateDate(baseDate, daysToAdd) {
+        let d = new Date(baseDate);
+        d.setDate(d.getDate() + daysToAdd);
+        return getFormattedDate(d);
+    }
+
+    function calculate(isAutoRestore = false) {
+        const codeInput = document.getElementById('apt-code').value.toUpperCase().trim();
+        const depositDate = document.getElementById('deposit-date').value;
+        const khachHang = document.getElementById('fullname').value || "Khách hàng";
+        
+        if (masterData.length === 0 || !codeInput || !depositDate) return;
+        const apt = findApt(codeInput);
+        if (!apt) return;
+
+        const status = document.getElementById('apt-status').getAttribute('data-val');
+        const plan = document.getElementById('payment-plan').value;
+        if (!plan) return;
+
+        // Lưu State
+        sessionStorage.setItem('ibiza_form_state', JSON.stringify({
+            fullname: khachHang, aptCode: codeInput, depositDate: depositDate, plan: plan,
+            mode: document.querySelector('input[name="calc-mode"]:checked').value,
+            enableExtra: document.getElementById('enable-extra').checked
+        }));
+
+        const giaDat = cleanAndParsePrice(layGiaTriCot(apt, "gia_dat"));
+        const giaXay = cleanAndParsePrice(layGiaTriCot(apt, "gia_xay"));
+        let giaDatSauCK = giaDat;
+        let breakdown = "";
+
+        if (document.querySelector('input[name="calc-mode"]:checked').value === 'auto') {
+            let rate = (status === 'DaXay') ? (plan === '12' ? 0.075 : (plan === '30' ? 0.15 : 0)) : (plan === '30' ? 0.07 : 0);
+            if (rate > 0) {
+                let giam = giaDat * rate;
+                breakdown += `• CK ${rate*100}% PTTT: <strong>-${formatMoney(giam)}</strong><br>`;
+                giaDatSauCK -= giam;
+            }
+            if (document.getElementById('enable-extra').checked) {
+                document.querySelectorAll('#extra-body tr').forEach(row => {
+                    const val = parseFloat(row.querySelector('.ex-value').value) || 0;
+                    if (val > 0) {
+                        let giam = (row.querySelector('.ex-type').value === 'amount') ? val : (row.querySelector('.ex-base').value === 'before-vat' ? (giaDatSauCK/1.1) : giaDatSauCK) * (val/100);
+                        breakdown += `• CK bổ sung: <strong>-${formatMoney(giam)}</strong><br>`;
+                        giaDatSauCK -= giam;
+                    }
+                });
+            }
+        }
+
+        giaDatSauCK = Math.max(0, Math.round(giaDatSauCK / 1000) * 1000);
+        let tongGiaSauCK = giaDatSauCK + giaXay;
+
+        document.getElementById('out-name').innerText = khachHang;
+        document.getElementById('out-code').innerText = codeInput;
+        document.getElementById('out-type').innerText = layGiaTriCot(apt, "Type") || "IB HUB";
+        document.getElementById('out-area').innerText = layGiaTriCot(apt, "dien_tich") || "0";
+        document.getElementById('out-price-land').innerText = formatMoney(giaDat);
+        document.getElementById('out-price-build').innerText = formatMoney(giaXay);
+        document.getElementById('out-price-raw').innerText = formatMoney(giaDat + giaXay);
+        document.getElementById('out-price-final').innerText = formatMoney(tongGiaSauCK);
+        document.getElementById('discount-breakdown').innerHTML = breakdown || "<i>Không có chiết khấu</i>";
+
+        renderSchedule(status, plan, giaDatSauCK, giaXay, tongGiaSauCK, depositDate);
+        document.getElementById('current-print-date').innerText = getFormattedDate(new Date());
+        document.getElementById('result-box').style.display = 'block';
+    }
+
+    function renderSchedule(status, plan, finalGiaDat, finalGiaXay, tongGiaSauCK, depositDateStr) {
+        const container = document.getElementById('schedule-content');
+        container.innerHTML = "";
+        const deposit = 100000000;
+        let hdmbObj = new Date(depositDateStr);
+        hdmbObj.setDate(hdmbObj.getDate() + 7);
+
+        if (status === 'DaXay') {
+            let steps = (plan === '12') ? 
+                [{d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.20}, {d: "Lần 2_Thanh toán", t: "T+60", days: 60, p: 0.10}, {d: "Lần 3_Thanh toán", t: "T+120", days: 120, p: 0.10}, {d: "Lần 4_Thanh toán", t: "T+180", days: 180, p: 0.10}, {d: "Lần 5_Thanh toán", t: "T+240", days: 240, p: 0.10}, {d: "Lần 6_Thanh toán", t: "T+300", days: 300, p: 0.10}, {d: "Lần 7_Bàn giao", t: "T+360", days: 360, p: 0.25}, {d: "Lần 8_GCN", t: "TB", days: null, p: 0.05}] :
+                [{d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.20}, {d: "Lần 2_Thanh toán nhanh", t: "T+30", days: 30, p: 0.75}, {d: "Lần 3_GCN", t: "TB", days: null, p: 0.05}];
+            
+            let html = `<div class="schedule-header">Tiến độ thanh toán (Đã xây dựng)</div><table class="schedule-table"><tr><th>Đợt</th><th>Thời hạn</th><th>Ngày dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>`;
+            html += `<tr><td>Đặt cọc</td><td class="td-center">-</td><td class="td-center">${getFormattedDate(new Date(depositDateStr))}</td><td class="td-center">-</td><td class="td-right"><strong>${formatMoney(deposit)}</strong></td></tr>`;
+            steps.forEach((s, i) => {
+                let amt = Math.round((tongGiaSauCK * s.p) / 1000) * 1000;
+                let note = (i === 0) ? `<br><small>(Nộp thêm: ${formatMoney(amt - deposit)})</small>` : "";
+                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${s.days === null ? "Theo TB" : calculateDate(hdmbObj, s.days)}</td><td class="td-center">${s.p*100}%</td><td class="td-right"><strong>${formatMoney(amt)}</strong>${note}</td></tr>`;
+            });
+            html += `<tr><td colspan="3" class="td-right">TỔNG CỘNG:</td><td class="td-center">100%</td><td class="td-right"><strong>${formatMoney(tongGiaSauCK)}</strong></td></tr></table>`;
+            container.innerHTML = html;
+        } else {
+            // Chưa xây dựng: Tách 2 bảng
+            let landSteps = [{d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.20}, {d: "Lần 2_Thanh toán", t: "T+90", days: 90, p: 0.20}, {d: "Lần 3", t: "T+120", days: 120, p: 0.15}, {d: "Lần 4", t: "T+180", days: 180, p: 0.15}, {d: "Lần 5", t: "T+360", days: 360, p: 0.25}];
+            let buildSteps = [{d: "Lần 1_XD", t: "T+9th", days: 270, p: 0.30}, {d: "Lần 2_XD", t: "L1+90", days: 360, p: 0.15}, {d: "Lần 3_BG", t: "L1+180", days: 450, p: 0.50}];
+            
+            let html = `<div class="schedule-header">1. Tiến độ tiền Đất (95%)</div><table class="schedule-table"><tr><th>Đợt</th><th>Thời hạn</th><th>Dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>`;
+            landSteps.forEach((s, i) => {
+                let amt = Math.round((finalGiaDat * s.p) / 1000) * 1000;
+                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${calculateDate(hdmbObj, s.days)}</td><td class="td-center">${(s.p*100).toFixed(0)}%</td><td class="td-right">${formatMoney(amt)}</td></tr>`;
+            });
+            html += `</table><div class="schedule-header">2. Tiến độ tiền Xây (95%)</div><table class="schedule-table"><tr><th>Đợt</th><th>Thời hạn</th><th>Dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>`;
+            buildSteps.forEach(s => {
+                let amt = Math.round((finalGiaXay * s.p) / 1000) * 1000;
+                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${calculateDate(hdmbObj, s.days)}</td><td class="td-center">${(s.p*100).toFixed(0)}%</td><td class="td-right">${formatMoney(amt)}</td></tr>`;
+            });
+            html += `</table><table class="schedule-table"><tr><td colspan="3" class="td-right"><strong>TỔNG GIÁ TRỊ SAU CK:</strong></td><td class="td-center"><strong>100%</strong></td><td class="td-right"><strong>${formatMoney(tongGiaSauCK)}</strong></td></tr></table>`;
+            container.innerHTML = html;
+        }
+    }
+
+    function inPhieu() {
+        document.getElementById('print-title-area').style.display = 'block';
+        window.print();
+    }
+    window.onafterprint = function() { document.getElementById('print-title-area').style.display = 'none'; };
 </script>
 </body>
 </html>
