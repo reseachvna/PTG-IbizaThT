@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phiếu Tính Giá Flamingo Hải Tiến</title>
+    <title>Phiếu Tính Giá Flamingo Hải Tiến </title>
     <style>
         :root {
-            --primary: #1a365d;      /* Navy đậm chuyên nghiệp */
-            --secondary: #d53f8c;    /* Hồng chủ đạo của IB Hub */
-            --accent: #E76F51;       /* Cam nhấn */
-            --bg-body: #f8f9fa;      /* Xám nền ngoài */
-            --bg-container: #ffffff; /* Trắng nền form */
-            --border-line: #cbd5e0;  /* Viền xám nhạt */
-            --text-main: #333333;    /* Đen mềm, dễ đọc */
-            --text-label: #4a5568;   /* Xám mô tả */
+            --primary: #1a365d;      
+            --secondary: #d53f8c;    
+            --accent: #E76F51;       
+            --bg-body: #f8f9fa;      
+            --bg-container: #ffffff; 
+            --border-line: #cbd5e0;  
+            --text-main: #333333;    
+            --text-label: #4a5568;   
             
-            /* Gradient mượt mà cho nút bấm và tiêu đề bảng */
             --btn-gradient: linear-gradient(135deg, #d53f8c, #1a365d);
             --btn-gradient-hover: linear-gradient(135deg, #b83280, #2c5282);
             --header-gradient: linear-gradient(90deg, #1a365d, #d53f8c);
@@ -112,7 +111,7 @@
         .info-item span { color: var(--text-label); font-size: 14px;}
         .info-item strong { color: var(--primary); font-size: 15px; font-weight: 600;}
         
-        .price-highlight { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border-line); margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .price-highlight { background: #fff; padding: 20px; border-radius: 8px; border: 2px solid var(--primary); margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         .final-price-container { border-top: 2px dashed #fbb6ce; margin-top: 15px; padding-top: 15px; display: flex; justify-content: space-between; align-items: center; }
         .final-price { color: var(--secondary); font-size: 22px; font-weight: bold; } 
         .discount-detail { font-size: 14px; color: var(--text-main); margin-top: 10px; padding-left: 15px; border-left: 3px solid var(--secondary); line-height: 1.6;}
@@ -140,7 +139,7 @@
             .header-box { display: block !important; margin-bottom: 15px; border-bottom: 2px solid #1a365d; padding-bottom: 10px;}
             h1 { font-size: 18px; margin-bottom: 2px; color: #1a365d !important; }
             h2 { font-size: 14px; margin-bottom: 0px; color: #d53f8c !important;}
-            .result-header { font-size: 15px; margin-bottom: 10px; color: #1a365d !important; }
+            .result-header { font-size: 15px; margin-bottom: 10px; color: #1a365d !important; border-bottom: 1px solid #000; }
             .print-header-actions { border-bottom: 1px solid #000; padding-bottom: 5px; margin-bottom: 10px;}
             
             .info-grid { gap: 10px; margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; background: #fff; }
@@ -179,17 +178,17 @@
 <div id="sales-modal" class="modal-overlay no-print">
     <div class="modal-content">
         <h3 style="color:var(--primary); margin-top:0; font-size: 20px; font-weight: bold;">ĐĂNG NHẬP HỆ THỐNG</h3>
-        <p style="font-size:14px; color:var(--text-label); margin-bottom: 25px;">Hệ thống lập phiếu tính giá Flamingo Hải Tiến</p>
+        <p style="font-size:14px; color:var(--text-label); margin-bottom: 25px;">Hệ thống tính giá Flamingo Hải Tiến</p>
         
         <div class="form-group" style="margin-bottom: 15px; text-align:left;">
             <label>Tên chuyên viên tư vấn (*)</label>
             <input type="text" id="sale-name" placeholder="Ví dụ: Nguyễn Phương Anh">
-            <span style="font-size: 11px; color: #e53e3e; margin-top: 4px; font-style: italic;">* Vui lòng nhập họ tên Sale</span>
+            <span style="font-size: 11px; color: #e53e3e; margin-top: 4px; font-style: italic;">* Vui lòng nhập họ tên Sale.</span>
         </div>
         <div class="form-group" style="margin-bottom: 25px; text-align:left;">
             <label>Số điện thoại (*)</label>
             <input type="text" id="sale-phone" placeholder="Ví dụ: 0987654321">
-            <span style="font-size: 11px; color: #e53e3e; margin-top: 4px; font-style: italic;">* Viết liền không dấu</span>
+            <span style="font-size: 11px; color: #e53e3e; margin-top: 4px; font-style: italic;">* Viết liền không dấu.</span>
         </div>
         
         <button class="btn-main" style="margin-top:0;" onclick="saveSalesInfo()">Xác nhận bắt đầu</button>
@@ -200,24 +199,24 @@
     
     <div id="sale-greeting" class="sale-greeting-box no-print" style="display:none;">
         👤 Đang tư vấn bởi: <strong id="current-sale-name" style="color:var(--secondary);">...</strong> 
-        <a href="#" onclick="logoutSales(); return false;" style="color:var(--text-label); text-decoration:underline; margin-left: 10px; font-size: 12px;">Thoát</a>
+        <a href="#" onclick="logoutSales(); return false;" style="color:var(--text-label); text-decoration:underline; margin-left: 10px; font-size: 12px;">(Đổi User)</a>
     </div>
 
     <div class="header-box no-print">
         <h1>Phiếu tính giá & Tiến độ thanh toán</h1>
-        <h2>Flamingo Hải Tiến</h2>
+        <h2>Flamingo Hải Tiến </h2>
         <div id="data-status" class="status-success">⏳ Đang khởi động hệ thống...</div>
     </div>
 
     <div class="mode-selector no-print">
         <label><input type="radio" name="calc-mode" value="auto" checked onchange="toggleMode()"> TÍNH TỰ ĐỘNG</label>
-        <label><input type="radio" name="calc-mode" value="custom" onchange="toggleMode()"> TÙY CHỈNH</label>
+        <label><input type="radio" name="calc-mode" value="custom" onchange="toggleMode()"> TÙY CHỈNH </label>
     </div>
 
     <div class="form-grid no-print">
         <div class="form-group">
             <label>Tên khách hàng</label>
-            <input type="text" id="fullname" placeholder="Nhập họ và tên...">
+            <input type="text" id="fullname" placeholder="Họ và tên khách hàng...">
         </div>
         <div class="form-group">
             <label>Mã sản phẩm</label>
@@ -244,7 +243,7 @@
             <div class="extra-discount-container">
                 <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; cursor: pointer; color: var(--primary);">
                     <input type="checkbox" id="enable-extra" onchange="toggleExtraDetails()">
-                    <strong>Áp dụng chiết khấu bổ sung (trên Tiền Đất)</strong>
+                    <strong>Áp dụng chiết khấu bổ sung (Tính lũy kế trên tiền Đất)</strong>
                 </label>
                 
                 <div id="extra-details-area" style="display: none;">
@@ -283,9 +282,9 @@
     </div>
 
     <div id="custom-discount-box" class="custom-discount-box no-print" style="display: none;">
-        <label style="font-weight: bold; color: var(--secondary); margin-bottom: 10px; display: inline-block;">Nhập thủ công các mục chiết khấu (Lũy kế trên Tiền Đất):</label>
+        <label style="font-weight: bold; color: var(--secondary); margin-bottom: 10px; display: inline-block;">Nhập thủ công các mục chiết khấu (Lũy kế trên tiền Đất):</label>
         <table class="custom-table">
-            <thead><tr><th style="text-align: left;">Nội dung / Lý do</th><th style="text-align: left;">Tỷ lệ (%)</th><th></th></tr></thead>
+            <thead><tr><th style="text-align: left;">Nội dung/Lý do</th><th style="text-align: left;">Tỷ lệ (%)</th><th></th></tr></thead>
             <tbody id="custom-body">
                 <tr>
                     <td><input type="text" class="c-name" placeholder="Ví dụ: Voucher ngoại giao..."></td>
@@ -301,14 +300,14 @@
 
     <div id="result-box">
         <div class="header-box" style="display: none;" id="print-title-area">
-            <h1>Phiếu tính giá & Tiến độ thanh toán</h1>
-            <h2>Flamingo Hải Tiến</h2>
+            <h1>Bảng tính giá & Tiến độ thanh toán</h1>
+            <h2>Flamingo Hải Tiến </h2>
         </div>
 
         <div class="print-header-actions">
             <h3 class="result-header">CHI TIẾT PHIẾU TÍNH GIÁ</h3>
             <div class="action-buttons no-print">
-                <button class="btn-print" onclick="inPhieu()">🖨️ In Phiếu / Lưu PDF</button>
+                <button class="btn-print" onclick="inPhieu()">🖨️ Tải PDF / In phiếu</button>
             </div>
         </div>
         
@@ -322,13 +321,13 @@
         <div class="price-highlight">
             <div class="info-item" style="border:none; padding-bottom: 0;"><span>Giá trị Đất (gồm VAT):</span> <strong id="out-price-land"></strong></div>
             <div class="info-item" style="border:none; padding-bottom: 0;"><span>Giá trị Xây dựng (gồm VAT):</span> <strong id="out-price-build"></strong></div>
-            <div class="info-item" style="border:none; padding-bottom: 0; margin-top: 5px;"><span>Tổng giá niêm yết:</span> <strong id="out-price-raw" style="font-size: 16px;"></strong></div>
+            <div class="info-item" style="border:none; padding-bottom: 0; margin-top: 5px;"><span>Tổng giá niêm yết:</span> <strong id="out-price-raw" style="font-size: 18px; color: var(--primary)"></strong></div>
             
-            <div style="margin-top: 20px; font-weight: 600; color: var(--text-main);">Chi tiết áp dụng chiết khấu (Được trừ trực tiếp vào Tiền Đất):</div>
+            <div style="margin-top: 15px; font-weight: bold; color: var(--text-main);">Chi tiết áp dụng chiết khấu (Được trừ trực tiếp vào tiền Đất):</div>
             <div id="discount-breakdown" class="discount-detail"></div>
             
             <div class="final-price-container">
-                <span style="font-size: 16px; color: var(--text-main); font-weight: bold;">TỔNG GIÁ SAU CHIẾT KHẤU:</span>
+                <span style="font-size: 18px; color: var(--text-main); font-weight: bold;">TỔNG GIÁ SAU CHIẾT KHẤU:</span>
                 <span class="final-price" id="out-price-final"></span>
             </div>
         </div>
@@ -348,7 +347,6 @@
 <script>
     let masterData = [];
 
-    // ===== LỌC REGEX ĐĂNG NHẬP =====
     function checkSalesLogin() {
         const saleInfo = localStorage.getItem('saleInfo');
         if (!saleInfo) {
@@ -395,7 +393,7 @@
         });
     }
 
-    // ===== AUTO-DETECT KHI SALE GÕ TỪNG PHÍM =====
+    // Logic quét real-time chuẩn Tân Trào
     document.getElementById('apt-code').addEventListener('input', function() {
         if(masterData.length === 0) return;
         const code = this.value.toUpperCase().trim();
@@ -411,7 +409,8 @@
 
         const apt = findApt(code);
         if(apt) {
-            let noteRaw = String(layGiaTriCot(apt, "Note") || layGiaTriCot(apt, "Type") || "").toUpperCase().trim();
+            // Quét trường Note chuẩn True/False
+            let noteRaw = String(layGiaTriCot(apt, "Note") || "").toUpperCase().trim();
             let statusVal = (noteRaw === "FALSE") ? "ChuaXay" : "DaXay";
             let statusText = (statusVal === 'ChuaXay') ? "Chưa xây dựng" : "Đã xây dựng";
 
@@ -434,7 +433,7 @@
             planSelect.innerHTML += `<option value="36">Phương án 36 tháng (Tiêu chuẩn)</option>`;
             planSelect.innerHTML += `<option value="12">Phương án 12 tháng (CK 7.5% trên tiền Đất)</option>`;
             planSelect.innerHTML += `<option value="30">Thanh toán nhanh 30 ngày (CK 15% trên tiền Đất)</option>`;
-        } else if (status === 'ChuaXay') {
+        } else {
             planSelect.innerHTML += `<option value="12">Thanh toán 12 tháng (Tiến độ Đất/Xây riêng biệt)</option>`;
             planSelect.innerHTML += `<option value="30">Thanh toán sớm tiền Đất 30 ngày (CK 7% trên tiền Đất)</option>`;
         }
@@ -444,8 +443,6 @@
         checkSalesLogin();
         const statusEl = document.getElementById('data-status');
         document.getElementById('deposit-date').valueAsDate = new Date();
-        
-        // Chống cache, gọi JSON mới nhất
         fetch('Data.json?v=' + new Date().getTime())
             .then(res => res.json())
             .then(data => {
@@ -459,7 +456,7 @@
                 restoreFormState();
             })
             .catch(err => {
-                statusEl.innerHTML = "⚠️ Lỗi tải dữ liệu JSON!";
+                statusEl.innerHTML = "⚠️ Lỗi tải dữ liệu!";
                 statusEl.className = "status-error";
             });
     }
@@ -474,6 +471,13 @@
                     document.getElementById('apt-code').value = state.aptCode;
                     document.getElementById('apt-code').dispatchEvent(new Event('input'));
                 }
+                
+                // Phục hồi Custom Box
+                if (state.mode) {
+                    document.querySelector(`input[name="calc-mode"][value="${state.mode}"]`).checked = true;
+                    toggleMode();
+                }
+
                 setTimeout(() => {
                     if(state.plan) document.getElementById('payment-plan').value = state.plan;
                     if (state.aptCode && document.getElementById('apt-status').getAttribute('data-val')) calculate(true);
@@ -532,39 +536,6 @@
         return getFormattedDate(d);
     }
 
-    // Gửi log về Google Sheet của IB
-    function sendDataToSheet(khachHang, maCan, giaNY, tongCK, giaSauCK) {
-        const saleInfoStr = localStorage.getItem('saleInfo');
-        let saleName = "Chưa khai báo";
-        let salePhone = "Chưa khai báo";
-        
-        if (saleInfoStr) {
-            const info = JSON.parse(saleInfoStr);
-            saleName = info.name;
-            salePhone = info.phone;
-        }
-
-        const payload = {
-            saleName: saleName,
-            salePhone: salePhone,
-            khachHang: khachHang,
-            maCan: maCan,
-            giaNiemYet: giaNY,
-            tongChietKhau: tongCK,
-            giaSauCK: giaSauCK
-        };
-
-        fetch("https://script.google.com/macros/s/AKfycby2ae5MqM0sShZx5l1ev_LYVAYWoBwwihXA_yG58HyPrJ5eoSmkoKYWrefZ8W6FBgGn/exec", {
-            method: 'POST',
-            mode: 'no-cors', 
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8',
-            },
-            body: JSON.stringify(payload)
-        }).catch(err => console.log("Lưu log sheet thất bại:", err));
-    }
-
-    // ===== THUẬT TOÁN TÍNH CHIẾT KHẤU IB =====
     function calculate(isAutoRestore = false) {
         const codeInput = document.getElementById('apt-code').value.toUpperCase().trim();
         const depositDate = document.getElementById('deposit-date').value;
@@ -572,11 +543,11 @@
         
         if (masterData.length === 0 || !codeInput || !depositDate) return;
         const apt = findApt(codeInput);
-        if (!apt) return alert("Mã sản phẩm không tồn tại!");
+        if (!apt) return;
 
         const status = document.getElementById('apt-status').getAttribute('data-val');
         const plan = document.getElementById('payment-plan').value;
-        if (!plan) return alert("Vui lòng chọn PTTT!");
+        if (!plan) return;
 
         // Lưu State
         sessionStorage.setItem('ibiza_form_state', JSON.stringify({
@@ -594,7 +565,9 @@
             let rate = (status === 'DaXay') ? (plan === '12' ? 0.075 : (plan === '30' ? 0.15 : 0)) : (plan === '30' ? 0.07 : 0);
             if (rate > 0) {
                 let giam = giaDat * rate;
-                breakdown += `• CK ${rate*100}% PTTT: <strong>-${formatMoney(giam)}</strong><br>`;
+                // FIX LỖI SỐ THẬP PHÂN JS: ÉP CHUẨN LÀM TRÒN
+                let displayRate = parseFloat((rate * 100).toFixed(2));
+                breakdown += `• CK ${displayRate}% PTTT: <strong>-${formatMoney(giam)}</strong><br>`;
                 giaDatSauCK -= giam;
             }
             if (document.getElementById('enable-extra').checked) {
@@ -635,11 +608,6 @@
         renderSchedule(status, plan, giaDatSauCK, giaXay, tongGiaSauCK, depositDate);
         document.getElementById('current-print-date').innerText = getFormattedDate(new Date());
         document.getElementById('result-box').style.display = 'block';
-        
-        if (!isAutoRestore) {
-            window.scrollTo({ top: document.getElementById('result-box').offsetTop, behavior: 'smooth' });
-            sendDataToSheet(khachHang, codeInput, giaDat + giaXay, (giaDat + giaXay) - tongGiaSauCK, tongGiaSauCK);
-        }
     }
 
     function renderSchedule(status, plan, finalGiaDat, finalGiaXay, tongGiaSauCK, depositDateStr) {
@@ -656,16 +624,21 @@
                 [{d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.20}, {d: "Lần 2_Thanh toán nhanh", t: "T+30", days: 30, p: 0.75}, {d: "Lần 3_GCN", t: "TB", days: null, p: 0.05}] :
                 [{d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.15}, {d: "Lần 2_HĐMB", t: "T+90", days: 90, p: 0.10}, {d: "Lần 3_HĐMB", t: "T+120", days: 120, p: 0.10}, {d: "Lần 4_HĐMB", t: "T+180", days: 180, p: 0.15}, {d: "Lần 5_HĐMB", t: "T+360", days: 360, p: 0.05}, {d: "Lần 6_HĐMB", t: "T+540", days: 540, p: 0.05}, {d: "Lần 7_HĐMB", t: "T+720", days: 720, p: 0.05}, {d: "Lần 8_HĐMB", t: "T+900", days: 900, p: 0.05}, {d: "Lần 9_HĐMB (Dự kiến nhận Bàn giao)", t: "T+1080", days: 1080, p: 0.25}, {d: "Lần 10_HĐMB (Thông báo nhận GCN)", t: "Theo TB", days: null, p: 0.05}]);
             
-            let html = `<div class="schedule-header">Tiến độ thanh toán (Sản phẩm Đã xây dựng)</div><table class="schedule-table"><tr><th>Tiến độ</th><th>Thời hạn</th><th>Ngày dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>`;
-            html += `<tr><td><strong>Đặt cọc</strong></td><td class="td-center">-</td><td class="td-center"><strong>${getFormattedDate(new Date(depositDateStr))}</strong></td><td class="td-center">-</td><td class="td-right"><strong>${formatMoney(deposit)}</strong></td></tr>`;
+            let html = `<div class="schedule-header">Tiến độ thanh toán (Đã xây dựng)</div><table class="schedule-table"><tr><th>Đợt</th><th>Thời hạn</th><th>Ngày dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>`;
+            html += `<tr><td>Đặt cọc</td><td class="td-center">-</td><td class="td-center">${getFormattedDate(new Date(depositDateStr))}</td><td class="td-center">-</td><td class="td-right"><strong>${formatMoney(deposit)}</strong></td></tr>`;
             steps.forEach((s, i) => {
                 let amt = Math.round((tongGiaSauCK * s.p) / 1000) * 1000;
-                let note = (i === 0) ? `<br><small style="color:var(--text-label)">(Đã gồm 100tr cọc. Nộp thêm: ${formatMoney(amt - deposit)})</small>` : "";
-                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${s.days === null ? "Theo TB" : calculateDate(hdmbObj, s.days)}</td><td class="td-center">${s.p*100}%</td><td class="td-right"><strong>${formatMoney(amt)}</strong>${note}</td></tr>`;
+                let note = (i === 0) ? `<br><small>(Nộp thêm: ${formatMoney(amt - deposit)})</small>` : "";
+                
+                // FIX LỖI SỐ THẬP PHÂN JS TRONG BẢNG TIẾN ĐỘ
+                let displayPercent = parseFloat((s.p * 100).toFixed(2));
+                
+                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${s.days === null ? "Theo TB" : calculateDate(hdmbObj, s.days)}</td><td class="td-center">${displayPercent}%</td><td class="td-right"><strong>${formatMoney(amt)}</strong>${note}</td></tr>`;
             });
-            html += `<tr style="background:#fdfafb"><td colspan="3" class="td-right"><strong>TỔNG CỘNG:</strong></td><td class="td-center"><strong>100%</strong></td><td class="td-right"><strong style="color:var(--secondary); font-size:16px">${formatMoney(tongGiaSauCK)}</strong></td></tr></table>`;
+            html += `<tr><td colspan="3" class="td-right">TỔNG CỘNG:</td><td class="td-center">100%</td><td class="td-right"><strong>${formatMoney(tongGiaSauCK)}</strong></td></tr></table>`;
             container.innerHTML = html;
         } else {
+            // Chưa xây dựng: Tách 2 bảng
             let landSteps = (plan === '12') ? 
                 [{d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.20}, {d: "Lần 2_Thanh toán", t: "T+90", days: 90, p: 0.20}, {d: "Lần 3", t: "T+120", days: 120, p: 0.15}, {d: "Lần 4", t: "T+180", days: 180, p: 0.15}, {d: "Lần 5", t: "T+360", days: 360, p: 0.25}] :
                 [{d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.20}, {d: "Lần 2_Thanh toán sớm", t: "T+30", days: 30, p: 0.75}];
@@ -674,12 +647,12 @@
             tXD_Obj.setMonth(tXD_Obj.getMonth() + 9);
             
             let buildSteps = [
-                {d: "Lần 1_XD <br><small style='font-weight:normal; color:var(--text-label)'>(Tạm tính thời gian thu tiền XD)</small>", t: "T+9 tháng", exactDate: tXD_Obj, p: 0.30}, 
-                {d: "Lần 2_XD", t: "Lần 1 XD + 90 ngày", exactDate: new Date(tXD_Obj.getTime() + 90*24*60*60*1000), p: 0.15}, 
-                {d: "Lần 3_BG", t: "Lần 1 XD + 180 ngày", exactDate: new Date(tXD_Obj.getTime() + 180*24*60*60*1000), p: 0.50}
+                {d: "Lần 1_XD", t: "T+9th", days: 270, p: 0.30}, 
+                {d: "Lần 2_XD", t: "L1+90", days: 360, p: 0.15}, 
+                {d: "Lần 3_BG", t: "L1+180", days: 450, p: 0.50}
             ];
             
-            let html = `<div class="schedule-header">1. Tiến độ thanh toán tiền Đất (95%)</div><table class="schedule-table"><tr><th>Tiến độ</th><th>Thời hạn</th><th>Dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>`;
+            let html = `<div class="schedule-header">1. Tiến độ tiền Đất (95%)</div><table class="schedule-table"><tr><th>Đợt</th><th>Thời hạn</th><th>Dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>`;
             html += `<tr><td><strong>Đặt cọc</strong></td><td class="td-center">-</td><td class="td-center"><strong>${getFormattedDate(new Date(depositDateStr))}</strong></td><td class="td-center">-</td><td class="td-right"><strong>${formatMoney(deposit)}</strong></td></tr>`;
             
             let totalLandPaid = 0;
@@ -687,16 +660,24 @@
                 let amt = Math.round((finalGiaDat * s.p) / 1000) * 1000;
                 totalLandPaid += amt;
                 let note = (i === 0) ? `<br><small style="color:var(--text-label)">(Đã gồm 100tr cọc. Nộp thêm: ${formatMoney(amt - deposit)})</small>` : "";
-                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${calculateDate(hdmbObj, s.days)}</td><td class="td-center">${(s.p*100).toFixed(0)}%</td><td class="td-right"><strong>${formatMoney(amt)}</strong>${note}</td></tr>`;
+                
+                // FIX LỖI SỐ THẬP PHÂN JS TRONG BẢNG TIẾN ĐỘ
+                let displayPercent = parseFloat((s.p * 100).toFixed(2));
+                
+                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${calculateDate(hdmbObj, s.days)}</td><td class="td-center">${displayPercent}%</td><td class="td-right"><strong>${formatMoney(amt)}</strong>${note}</td></tr>`;
             });
             html += `<tr style="background:#fdfafb"><td colspan="3" class="td-right"><strong>Cộng (Tiền Đất 95%):</strong></td><td class="td-center"><strong>95%</strong></td><td class="td-right"><strong style="color:var(--primary)">${formatMoney(totalLandPaid)}</strong></td></tr></table>`;
             
-            html += `<div class="schedule-header">2. Tiến độ thanh toán tiền Xây (95%)</div><table class="schedule-table"><tr><th>Tiến độ</th><th>Thời hạn</th><th>Dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>`;
+            html += `<div class="schedule-header">2. Tiến độ tiền Xây (95%)</div><table class="schedule-table"><tr><th>Đợt</th><th>Thời hạn</th><th>Dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>`;
             let totalBuildPaid = 0;
             buildSteps.forEach(s => {
                 let amt = Math.round((finalGiaXay * s.p) / 1000) * 1000;
                 totalBuildPaid += amt;
-                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${getFormattedDate(s.exactDate)}</td><td class="td-center">${(s.p*100).toFixed(0)}%</td><td class="td-right"><strong>${formatMoney(amt)}</strong></td></tr>`;
+                
+                // FIX LỖI SỐ THẬP PHÂN JS TRONG BẢNG TIẾN ĐỘ
+                let displayPercent = parseFloat((s.p * 100).toFixed(2));
+                
+                html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${calculateDate(hdmbObj, s.days)}</td><td class="td-center">${displayPercent}%</td><td class="td-right"><strong>${formatMoney(amt)}</strong></td></tr>`;
             });
             html += `<tr style="background:#fdfafb"><td colspan="3" class="td-right"><strong>Cộng (Tiền Xây 95%):</strong></td><td class="td-center"><strong>95%</strong></td><td class="td-right"><strong style="color:var(--primary)">${formatMoney(totalBuildPaid)}</strong></td></tr></table>`;
             
